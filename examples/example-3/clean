@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+for alg in PQ SCFQ SFQ WFQ WF2Qp LLQ
+do
+        rm -rf $alg
+done
+
+# remove previous working files
+rm -vrf *.tr
+rm -vrf *.p
+rm -vrf *.out
+rm -vrf *.png

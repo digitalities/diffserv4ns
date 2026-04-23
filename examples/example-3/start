@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# Copyright (C) 2001-2006  Sergio Andreozzi
+#
+# This file is part of DiffServ4NS, a set of improvements to
+# the Network Simulator 2 for DiffServ simulations.
+#
+# Project page: http://diffserv4ns.sourceforge.net/
+#
+# DiffServ4NS is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# DiffServ4NS is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DiffServ4NS; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# GNU License: http://www.gnu.org/licenses/gpl.txt
+
+
+
+
+
+# cleaning old images
+rm -rf *.png
+
+# simulate over the available schedulers
+# you can choose among: PQ SCFQ SFQ WF2Qp LLQ WFQ
+
+for alg in PQ SCFQ SFQ WFQ WF2Qp LLQ 
+do
+        
+	time=200.0
+	quiet=false # in this example, this attribute
+                    # is not used; by default false
+                    # in simulation-1.tcl
+
+	# remove previous working files
+	rm -f *.tr
+	rm -f *.p
+	rm -f *.out
+
+	ns gnuplot.tcl $alg $EF1ps $EF2ps 
+
+	EF1ps=64
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=128
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=256
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=512
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=1024
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=1280
+        ns simulation-1.tcl $alg $time $EF1ps $quiet 
+	EF1ps=1518
+	ns simulation-1.tcl $alg $time $EF1ps $quiet 
+
+	gnuplot ipdv.p
+	gnuplot owd.p
+	gnuplot queue.p
+	gnuplot EF_MBS.p
+	gnuplot pktLoss1.p
+	
+	rm -rf $alg
+	mkdir $alg
+#	mv *.out $alg
+        mv *.tr $alg
+   	mv *.png $alg
+   	mv *.p   $alg
+done
+
+rm -rf *.tr
+rm -rf *.p
+
+
+
+

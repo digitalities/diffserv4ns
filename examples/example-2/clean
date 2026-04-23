@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+# remove previous working files
+rm -vrf *.tr
+rm -vrf *.out
+rm -vrf *.png

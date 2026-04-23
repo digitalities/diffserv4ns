@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+title: "DiffServ4NS for ns-2"
+message: "If you use this software, please cite the ISCC 2002 paper and the Zenodo archive record."
+type: software
+version: "v1.0-archival"
+authors:
+  - family-names: Andreozzi
+    given-names: Sergio
+    orcid: "https://orcid.org/0000-0001-5567-4000"
+license: GPL-2.0
+repository-code: "https://github.com/digitalities/diffserv4ns"
+url: "https://digitalities.github.io/diffserv4ns/"
+keywords:
+  - DiffServ
+  - QoS
+  - ns-2
+  - ns-2.29
+  - ns-2.35
+  - network simulation
+  - scheduling
+  - WFQ
+  - WF2Q+
+  - SCFQ
+  - SFQ
+  - LLQ
+  - research software
+  - archive
+  - reproducibility
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19665019"
+    description: "Zenodo concept DOI (resolves to the latest version of the ns-2 archive)."
+  - type: doi
+    value: "10.5281/zenodo.19665020"
+    description: "Zenodo version DOI (pins the v1.0-archival snapshot)."
+date-released: "2026-04-23"
+preferred-citation:
+  type: conference-paper
+  title: "Differentiated services: an experimental vs. simulated case study"
+  authors:
+    - family-names: Andreozzi
+      given-names: Sergio
+      orcid: "https://orcid.org/0000-0001-5567-4000"
+  collection-title: "Proceedings of the Seventh IEEE Symposium on Computers and Communications (ISCC 2002)"
+  conference:
+    name: "ISCC 2002"
+    city: "Taormina"
+    country: "IT"
+    date-start: "2002-07-01"
+    date-end: "2002-07-04"
+  year: 2002
+  start: 383
+  end: 390
+  isbn: "0-7695-1671-8"
+  doi: "10.1109/ISCC.2002.1021705"
+  publisher:
+    name: "IEEE Computer Society"
+references:
+  - type: thesis
+    title: "DiffServ simulations using the Network Simulator: requirements, issues and solutions"
+    authors:
+      - family-names: Andreozzi
+        given-names: Sergio
+        orcid: "https://orcid.org/0000-0001-5567-4000"
+    year: 2001
+    institution:
+      name: "Lappeenranta University of Technology / Universita degli Studi di Pisa"
+    thesis-type: "Master's thesis"
