@@ -117,11 +117,11 @@
 
 #include <string.h>
 
-// BUG-10 (2026-04-18): per-policy RNG stream isolation.
+// D2-3 (2026-04-18): per-policy RNG stream isolation.
 // Base class Policy now owns an optional isolated RNG stream. TSW2CM,
 // TSW3CM and FW each draw via `this->uniform()`, which falls back to
 // the global default stream (pre-fix behaviour) when no stream has
-// been configured. See HISTORICAL_BUGS.md §BUG-10.
+// been configured. See HISTORICAL_BUGS.md §D2-3.
 Policy::~Policy() {
   delete rng_;
 }
@@ -150,7 +150,7 @@ PolicyClassifier::PolicyClassifier() {
     policy_pool[i] = NULL;
 }
 
-// BUG-10: route an isolated RNG stream to a named policy-pool slot.
+// D2-3: route an isolated RNG stream to a named policy-pool slot.
 int PolicyClassifier::setPolicyRngStream(const char *policyName, int stream) {
   int idx = -1;
   if (strcmp(policyName, "TSW2CM") == 0)        idx = TSW2CM;
@@ -503,7 +503,7 @@ void PolicyClassifier::addPolicerEntry(int argc, const char*const* argv) {
   policerTable[policerTableSize].downgrade1 = 0;
   policerTable[policerTableSize].downgrade2 = 0;
   //printf("Policer: %s %s \n", argv[2], argv[3]);
-  // 2026-04-18: BUG-8 fix.
+  // 2026-04-18: D2-2 fix.
   // The original 2001 code used `argc == 5` and `argc == 6` as EXCLUSIVE
   // branches: for a 3-color policer specified with 4 args (e.g.
   // `$q addPolicerEntry srTCM 10 10 12`, argc=6), only downgrade2 was
@@ -761,7 +761,7 @@ Returns: A code point to apply to the current packet.
 Uses: Method downgradeOne().
 -----------------------------------------------------------------------------*/
 int TSW2CMPolicy::applyPolicer(policyTableEntry *policy, policerTableEntry *policer, Packet *pkt) {
-  // BUG-10: uniform() falls through to Random::uniform(0,1) unless
+  // D2-3: uniform() falls through to Random::uniform(0,1) unless
   // setRngStream(N) has been called on this Policy (pre-fix default).
   if ((policy->avgRate > policy->cir)
       && (uniform() <= (1-(policy->cir/policy->avgRate)))) {
@@ -816,7 +816,7 @@ Returns: A code point to apply to the current packet.
 Uses: Methods downgradeOne() and downgradeTwo().
 -----------------------------------------------------------------------------*/
 int TSW3CMPolicy::applyPolicer(policyTableEntry *policy, policerTableEntry *policer, Packet *pkt) {
-  // BUG-10: uniform() falls through to Random::uniform(0,1) by default.
+  // D2-3: uniform() falls through to Random::uniform(0,1) by default.
   double rand = policy->avgRate * (1.0 - uniform());
   
   if (rand > policy->pir)
@@ -1121,7 +1121,7 @@ int FWPolicy::applyPolicer(policyTableEntry *policy, policerTableEntry *policer,
 	  //printf("leave applyPolicer  %d, every downgrade\n", p->fid);
 	  return(policer->downgrade1);
 	} else if (policer->downgrade2 == 1) {
-	  // Randomized penalization. BUG-10: uniform() defaults to the global
+	  // Randomized penalization. D2-3: uniform() defaults to the global
 	  // stream unless setRngStream(N) has been called on the FW policy.
 	  if (uniform() > (1 - (policy->cir/p->bytes_sent))) {
 	    //printf("leave applyPolicer %d, random initial.\n", p->fid);

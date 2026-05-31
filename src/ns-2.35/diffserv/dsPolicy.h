@@ -91,7 +91,7 @@
 #include "dsconsts.h"
 #include "packet.h"
 
-// BUG-10 (2026-04-18): Forward-declare RNG so `Policy::rng_` can be a
+// D2-3 (2026-04-18): Forward-declare RNG so `Policy::rng_` can be a
 // pointer without dragging tools/rng.h into every consumer of this
 // header. The full definition is pulled in by dsPolicy.cc only.
 class RNG;
@@ -186,7 +186,7 @@ class PolicyClassifier : public TclObject {
   void printPolicyTable();
   void printPolicerTable();
 
-  // BUG-10: isolate the probabilistic-marking RNG stream for a named
+  // D2-3: isolate the probabilistic-marking RNG stream for a named
   // policy-pool slot ("TSW2CM", "TSW3CM", or "FW"). Lazy-creates the
   // pool slot if absent, then calls setRngStream(stream) on the Policy
   // instance. Returns 0 on success, -1 on unknown policy name. Callers
@@ -228,7 +228,7 @@ class Policy : public TclObject {
   virtual void applyMeter(policyTableEntry *policy, Packet *pkt) = 0;
   virtual int applyPolicer(policyTableEntry *policy, policerTableEntry *policer, Packet *pkt) = 0;
 
-  // BUG-10 (2026-04-18): per-policy RNG stream isolation.
+  // D2-3 (2026-04-18): per-policy RNG stream isolation.
   //
   // Pre-fix, TSW2CMPolicy / TSW3CMPolicy / FWPolicy called
   // Random::uniform(0.0, 1.0) directly, which draws from ns-2's global

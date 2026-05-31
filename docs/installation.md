@@ -50,21 +50,21 @@ git clone https://github.com/digitalities/diffserv4ns.git
 cd diffserv4ns
 
 # 1. Download ns-allinone-2.29.3 source tree
-./scripts/fetch-ns2-allinone-229.sh
+./scripts/fetch-ns2-allinone.sh
 
 # 2. Build vanilla ns-2 inside Docker
-./scripts/build-ns2-allinone-229-docker.sh
+./scripts/build-ns2-allinone-docker.sh
 
 # 3. Patch in DiffServ4NS module
-./scripts/patch-ns2-diffserv-229.sh
+./scripts/patch-ns2-diffserv.sh
 
 # 4. Rebuild with DiffServ4NS
-./scripts/build-ns2-allinone-229-docker.sh
+./scripts/build-ns2-allinone-docker.sh
 ```
 
 ### What the build script does
 
-The Docker build ([`scripts/build-ns2-allinone-229-docker.sh`](https://github.com/digitalities/diffserv4ns/blob/main/scripts/build-ns2-allinone-229-docker.sh)) builds only the four components needed for headless simulation: **Tcl 8.4.11 → OTcl 1.11 → TclCL 1.17 → ns-2.29**. It skips Tk, nam, and xgraph (which require X11 and are unnecessary for running simulations).
+The Docker build ([`scripts/build-ns2-allinone-docker.sh`](https://github.com/digitalities/diffserv4ns/blob/main/scripts/build-ns2-allinone-docker.sh)) builds only the four components needed for headless simulation: **Tcl 8.4.11 → OTcl 1.11 → TclCL 1.17 → ns-2.29**. It skips Tk, nam, and xgraph (which require X11 and are unnecessary for running simulations).
 
 Six workarounds are applied automatically:
 
@@ -79,7 +79,7 @@ Six workarounds are applied automatically:
 
 ### What the patch script does
 
-The patch script ([`scripts/patch-ns2-diffserv-229.sh`](https://github.com/digitalities/diffserv4ns/blob/main/scripts/patch-ns2-diffserv-229.sh)) is idempotent (safe to run multiple times) and:
+The patch script ([`scripts/patch-ns2-diffserv.sh`](https://github.com/digitalities/diffserv4ns/blob/main/scripts/patch-ns2-diffserv.sh)) is idempotent (safe to run multiple times) and:
 
 1. Copies `src/ns-2.29/diffserv/*.{h,cc}` into `ns-2.29/diffserv/`, replacing Nortel originals
 2. Copies 14 modified ns-2 base files (packet.h, agent, tcp, udp, telnet, loss-monitor, etc.)
@@ -148,7 +148,7 @@ This gives you a shell where `ns` is on PATH and the full project directory is m
 | Problem | Fix |
 |---------|-----|
 | `docker: command not found` | Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) |
-| Build fails on Apple Silicon | The script uses native arm64 — this should work. If it doesn't, add `--platform linux/amd64` to the `docker run` line in `build-ns2-allinone-229-docker.sh` (slower, uses QEMU) |
+| Build fails on Apple Silicon | The script uses native arm64 — this should work. If it doesn't, add `--platform linux/amd64` to the `docker run` line in `build-ns2-allinone-docker.sh` (slower, uses QEMU) |
 | `Cannot connect to the Docker daemon` | Start Docker Desktop |
 | Build very slow (>10 minutes) | A native-arm64 build on Apple Silicon typically completes in ~2 minutes; on Intel/amd64 in 3–5 minutes. Builds above ~10 minutes usually indicate QEMU emulation. Check `docker info` — `Architecture` should match your host |
 | SourceForge download fails | Download [ns-allinone-2.29.3](https://sourceforge.net/projects/nsnam/files/allinone/ns-allinone-2.29/) manually and extract to `ns2/ns-allinone-2.29.3/` |

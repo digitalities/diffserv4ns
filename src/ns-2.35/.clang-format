@@ -1,0 +1,15 @@
+# The 2026 ns-2.35 port layer at src/ns-2.35/ is a fourteen-file
+# overlay on stock ns-2.35 (see ADR-0024 for the umbrella layout). The
+# overlay's style matches the ns-2.35 originals it replaces, NOT ns-3's
+# Microsoft/Allman base. Reformatting these files to ns-3 style would
+# defeat the byte-for-byte diff discipline against stock ns-2.35 that
+# makes the overlay auditable.
+#
+# The ancestor walkup stops here, not at the project-root .clang-format,
+# so both manual clang-format invocations and check-style-clang-format.py
+# respect the disable.
+---
+Language: Cpp
+DisableFormat: true
+SortIncludes: Never
+...

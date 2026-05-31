@@ -159,7 +159,7 @@ WebTrafSession::~WebTrafSession()
 		abort();
 	}
 
-	// DS4 BUG-9 fix: the upstream ns-2 destructor (xuanc 2011) conditionally
+	// DS4 N2-2 fix: the upstream ns-2 destructor (xuanc 2011) conditionally
 	// deletes the four RandomVariable objects via Tcl when recycle_page_=1,
 	// which is the upstream default in tcl/webcache/webtraf.tcl. The idiomatic
 	// ns-2 scenario pattern creates ONE RV object per RV-type and passes it
@@ -174,7 +174,7 @@ WebTrafSession::~WebTrafSession()
 	// that really do allocate per-session private RVs and want to reclaim
 	// them before sim-end can still do so explicitly from Tcl.
 	//
-	// See docs/HISTORICAL_BUGS.md BUG-9 for the full Phase A bisection /
+	// See docs/HISTORICAL_BUGS.md N2-2 for the full bisection /
 	// trace / fix rationale.
 	(void)recycle_page_;
 }

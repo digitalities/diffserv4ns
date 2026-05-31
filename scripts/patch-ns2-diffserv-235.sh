@@ -12,22 +12,22 @@
 #    bug fixes listed below, so the ns-2.35 port is a functional
 #    "improved DS4" reference:
 #
-#   BUG-1  tools/cbr_traffic.cc    — set_pkttype(PT_CBR) was overwritten;
-#                                    fixed to set_apptype(PT_CBR)
-#   BUG-2  realaudio/realaudio.cc  — set_pkttype(PT_REALAUDIO) overwritten;
-#                                    fixed to set_apptype(PT_REALAUDIO)
-#   BUG-3  tcl/ns-source.tcl       — magic number 27 replaced by $PT_FTP
-#                                    variable (27==PT_FTP in ns-2.35)
-#   BUG-4  diffserv/dsscheduler.cc — SFQ DequeEvent: empty() moved before
-#                                    front() to eliminate UB
-#   BUG-5  tcl/ns-source.tcl       — FTP set_apptype added to all four
-#                                    instprocs (start/send/produce/producemore)
-#   UDP hdr apps/udp.cc            — sendmsg() adds 28 bytes (IP 20 + UDP 8)
-#                                    so hdr_cmn::size() includes header overhead,
-#                                    matching real-world serialisation
+#   D2-5 tools/cbr_traffic.cc    — set_pkttype(PT_CBR) was overwritten;
+#                                  fixed to set_apptype(PT_CBR)
+#   D2-6 realaudio/realaudio.cc  — set_pkttype(PT_REALAUDIO) overwritten;
+#                                  fixed to set_apptype(PT_REALAUDIO)
+#   D2-7 tcl/ns-source.tcl       — magic number 27 replaced by $PT_FTP
+#                                  variable (27==PT_FTP in ns-2.35)
+#   D2-4 diffserv/dsscheduler.cc — SFQ DequeEvent: empty() moved before
+#                                  front() to eliminate UB
+#   D2-1 tcl/ns-source.tcl       — FTP set_apptype added to all four
+#                                  instprocs (start/send/produce/producemore)
+#   UDP hdr apps/udp.cc          — sendmsg() adds 28 bytes (IP 20 + UDP 8)
+#                                  so hdr_cmn::size() includes header overhead,
+#                                  matching real-world serialisation
 #
 # Together these inputs cover the 14 base files DS4 modifies in ns-2 plus
-# webcache/webtraf.h (BUG-9 fix staging, ns-2.35 only), for 15 base files
+# webcache/webtraf.h (N2-2 fix staging, ns-2.35 only), for 15 base files
 # total. Parity with the ns-2.29 patch script (scripts/patch-ns2-diffserv-229.sh)
 # is preserved for the 14 shared files; webtraf.h is an additive ns-2.35-only
 # patch target.
@@ -124,23 +124,23 @@ cp "$SRC235/apps/telnet.cc"         "$NS235_TARGET/apps/telnet.cc"
 echo "  Patched: apps/telnet.cc"
 
 cp "$SRC235/tcl/ns-source.tcl"      "$NS235_TARGET/tcl/lib/ns-source.tcl"
-echo "  Patched: tcl/lib/ns-source.tcl (BUG-3: PT_FTP symbolic var; BUG-5: set_apptype in all FTP instprocs)"
+echo "  Patched: tcl/lib/ns-source.tcl (D2-7: PT_FTP symbolic var; D2-1: set_apptype in all FTP instprocs)"
 
 cp "$SRC235/tools/cbr_traffic.cc"   "$NS235_TARGET/tools/cbr_traffic.cc"
-echo "  Patched: tools/cbr_traffic.cc (BUG-1: set_apptype(PT_CBR))"
+echo "  Patched: tools/cbr_traffic.cc (D2-5: set_apptype(PT_CBR))"
 
 cp "$SRC235/tools/loss-monitor.h"   "$NS235_TARGET/tools/loss-monitor.h"
 cp "$SRC235/tools/loss-monitor.cc"  "$NS235_TARGET/tools/loss-monitor.cc"
 echo "  Patched: tools/loss-monitor.{h,cc} (OWD/IPDV monitoring + FrequencyDistribution)"
 
 cp "$SRC235/realaudio/realaudio.cc" "$NS235_TARGET/realaudio/realaudio.cc"
-echo "  Patched: realaudio/realaudio.cc (BUG-2: set_apptype(PT_REALAUDIO))"
+echo "  Patched: realaudio/realaudio.cc (D2-6: set_apptype(PT_REALAUDIO))"
 
 cp "$SRC235/tcp/tcp.cc"                 "$NS235_TARGET/tcp/tcp.cc"
 echo "  Patched: tcp/tcp.cc (DS4: stamp cwnd_/t_rtt_ on outgoing TCP packets)"
 
 cp "$SRC235/webcache/webtraf.h"         "$NS235_TARGET/webcache/webtraf.h"
-echo "  Patched: webcache/webtraf.h (DS4 working copy; pristine upstream + BUG-9 fix staging)"
+echo "  Patched: webcache/webtraf.h (DS4 working copy; pristine upstream + N2-2 fix staging)"
 
 cp "$SRC235/webcache/webtraf.cc"        "$NS235_TARGET/webcache/webtraf.cc"
 echo "  Patched: webcache/webtraf.cc (DS4: tag WebTraf TCP agents with PT_HTTP)"
@@ -168,14 +168,14 @@ echo "=== Patch complete ==="
 echo ""
 echo "Files patched in $NS235_TARGET:"
 echo "  DiffServ4NS module (2001 algorithmic code): diffserv/*.{h,cc} replaced"
-echo "  ns-2.35 adaptations (2026 port layer; bug fixes applied, 15 base files: the 14 DS4-patched files plus webtraf.h for BUG-9 staging):"
+echo "  ns-2.35 adaptations (2026 port layer; bug fixes applied, 15 base files: the 14 DS4-patched files plus webtraf.h for N2-2 staging):"
 echo "    dsred.cc, dsEdge.cc           — upstream warning-hygiene fixes"
-echo "    dsscheduler.cc                — BUG-4: SFQ empty() before front()"
-echo "    tools/cbr_traffic.cc          — BUG-1: set_apptype(PT_CBR)"
+echo "    dsscheduler.cc                — D2-4: SFQ empty() before front()"
+echo "    tools/cbr_traffic.cc          — D2-5: set_apptype(PT_CBR)"
 echo "    tools/loss-monitor.{h,cc}     — OWD/IPDV monitoring + FrequencyDistribution"
-echo "    realaudio/realaudio.cc        — BUG-2: set_apptype(PT_REALAUDIO)"
-echo "    tcl/lib/ns-source.tcl         — BUG-3: PT_FTP symbolic var"
-echo "                                    BUG-5: set_apptype in all FTP instprocs"
+echo "    realaudio/realaudio.cc        — D2-6: set_apptype(PT_REALAUDIO)"
+echo "    tcl/lib/ns-source.tcl         — D2-7: PT_FTP symbolic var"
+echo "                                    D2-1: set_apptype in all FTP instprocs"
 echo "    apps/udp.cc                   — UDP header: +28 bytes (IP 20 + UDP 8)"
 echo "    common/packet.h, agent.h, agent.cc, tcp/tcp.h, apps/telnet.cc"
 echo "    tcp/tcp.cc                    — DS4: stamp cwnd_/t_rtt_ on outgoing TCP"
@@ -183,7 +183,7 @@ echo "    webcache/webtraf.cc           — DS4: tag WebTraf TCP agents with PT_
 echo "    tcl/lib/ns-default.tcl        — DS4: Queue/dsRED + LossMonitor defaults"
 echo "  Makefile.in: dsscheduler.o added"
 echo ""
-echo "  ns-2.35 port now covers 15 base files: parity with the ns-2.29 patch script's 14, plus webtraf.h (ns-2.35-only BUG-9 staging)."
+echo "  ns-2.35 port now covers 15 base files: parity with the ns-2.29 patch script's 14, plus webtraf.h (ns-2.35-only N2-2 staging)."
 echo ""
 echo "Next steps:"
 echo "  1. Rebuild ns-2.35: ./scripts/build-ns2-allinone-235-docker.sh"

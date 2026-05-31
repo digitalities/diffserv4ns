@@ -41,9 +41,9 @@
 
 /*
  * ns-2.35 port: this file replaces src/ns-2.29/tools/cbr_traffic.cc.
- * BUG-1 fix: second call changed from set_pkttype(PT_UDP) to set_apptype(PT_CBR)
+ * D2-5 fix: second call changed from set_pkttype(PT_UDP) to set_apptype(PT_CBR)
  * so transport type stays PT_UDP and DiffServ classifier reads correct app_type_.
- * See docs/HISTORICAL_BUGS.md BUG-1.
+ * See docs/HISTORICAL_BUGS.md D2-5.
  */
 
 #include <stdlib.h>
@@ -99,7 +99,7 @@ void CBR_Traffic::init()
 		if (agent_->get_pkttype() != PT_TCP &&
  		    agent_->get_pkttype() != PT_TFRC) {
 			agent_->set_pkttype(PT_UDP);
-                        agent_->set_apptype(PT_CBR); // BUG-1 fix: was set_pkttype(PT_UDP) — see HISTORICAL_BUGS.md BUG-1
+                        agent_->set_apptype(PT_CBR); // D2-5 fix: was set_pkttype(PT_UDP) — see HISTORICAL_BUGS.md D2-5
                     }
 }
 

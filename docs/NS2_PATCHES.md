@@ -460,9 +460,9 @@ unchanged from the Nortel original.
 #### Branch divergence (added 2026-04-16)
 
 The `dumb/null` and `EW/DEWP` rows above establish that DiffServ4NS is a
-**divergent 2001 fork** of the `ns-2.1b8a` DiffServ module.  Sergio developed
-DiffServ4NS in 2001 against `ns-2.1b8a`, and re-released it on SourceForge
-in 2006 ported to ns-2.29, but never re-merged upstream changes to
+**divergent 2001 fork** of the `ns-2.1b8` DiffServ module.  Sergio developed
+DiffServ4NS in 2001 against `ns-2.1b8`, and re-released it on SourceForge
+in 2005/2006 against ns-2.29, but never re-merged upstream changes to
 `diffserv/*` in between.  Evidence:
 
 - If DiffServ4NS had pulled from mainline after 27 Nov 2003, the class
@@ -476,7 +476,7 @@ in 2006 ported to ns-2.29, but never re-merged upstream changes to
   Sergio's, not an upstream event.
 
 This matters for any attempt to reason about what DiffServ4NS "inherits"
-from ns-2 mainline: the answer is *the ns-2.1b8a Nortel/Chen snapshot only*.
+from ns-2 mainline: the answer is *the ns-2.1b8 Nortel/Chen snapshot only*.
 Later upstream features and bug fixes that touch `diffserv/*` did not
 reach DiffServ4NS users.  Users who rebuild DiffServ4NS against ns-2.29
 get a hybrid: the rest of ns-2.29 mainline, but a 2001-vintage `diffserv/`
@@ -533,17 +533,23 @@ preserving 6 years of upstream drift between ns-2.29 and ns-2.35.
 
 | Fix | File | Cross-ref |
 |-----|------|-----------|
-| BUG-1: CBR app_type_ | `src-ns235/tools/cbr_traffic.cc` | HISTORICAL_BUGS.md BUG-1 |
-| BUG-2: RealAudio app_type_ | `src-ns235/realaudio/realaudio.cc` | HISTORICAL_BUGS.md BUG-2 |
-| BUG-3: FTP magic number | `src-ns235/tcl/ns-source.tcl` | HISTORICAL_BUGS.md BUG-3 |
-| BUG-4: SFQ UB in DequeEvent | `src-ns235/diffserv/dsscheduler.cc` | HISTORICAL_BUGS.md BUG-4 |
-| BUG-5: FTP incomplete patch | `src-ns235/tcl/ns-source.tcl` | HISTORICAL_BUGS.md BUG-5 |
+| D2-5 (BUG-1): CBR app_type_ | `src-ns235/tools/cbr_traffic.cc` | HISTORICAL_BUGS.md D2-5 |
+| D2-6 (BUG-2): RealAudio app_type_ | `src-ns235/realaudio/realaudio.cc` | HISTORICAL_BUGS.md D2-6 |
+| D2-7 (BUG-3): FTP magic number | `src-ns235/tcl/ns-source.tcl` | HISTORICAL_BUGS.md D2-7 |
+| D2-4 (BUG-4): SFQ UB in DequeEvent | `src-ns235/diffserv/dsscheduler.cc` | HISTORICAL_BUGS.md D2-4 |
+| D2-1 (BUG-5): FTP incomplete patch | `src-ns235/tcl/ns-source.tcl` | HISTORICAL_BUGS.md D2-1 |
 | UDP header overhead | `src-ns235/apps/udp.cc` | `docs/email-ns2-udp-header-issue.md` |
 | DS4-P1: TCP cwnd/rtt stamping | `src-ns235/tcp/tcp.cc` | NS2_PATCHES.md §3 |
 | DS4-P2: WebTraf PT_HTTP tag | `src-ns235/webcache/webtraf.cc` | NS2_PATCHES.md §5 |
 | DS4-P3: ns-default.tcl defaults | `src-ns235/tcl/lib/ns-default.tcl` | NS2_PATCHES.md §7 |
 
-### BUG-1: cbr_traffic.cc — set_apptype(PT_CBR)
+> The `DS4-P1`, `DS4-P2`, `DS4-P3` labels are stable identifiers and are
+> intentionally NOT renamed. They identify DiffServ4NS patch points (P-stable),
+> not bug catalogue entries (relabelled 2026-04-26 from chronological
+> `BUG-N` to area-prefix `N2-N` / `D2-N` / `N3-N`; see HISTORICAL_BUGS.md
+> for the bridge).
+
+### D2-5 (formerly BUG-1): cbr_traffic.cc — set_apptype(PT_CBR)
 
 The DS4 original has `set_pkttype(PT_CBR)` immediately overwritten by
 `set_pkttype(PT_UDP)`. The ns-2.35 replacement changes the second call
@@ -551,13 +557,13 @@ to `set_apptype(PT_CBR)`, so CBR traffic is stamped with the correct
 application type for DiffServ classification while keeping transport
 type PT_UDP.
 
-### BUG-2: realaudio.cc — set_apptype(PT_REALAUDIO)
+### D2-6 (formerly BUG-2): realaudio.cc — set_apptype(PT_REALAUDIO)
 
-Same pattern as BUG-1. The ns-2.35 replacement changes the second call
+Same pattern as D2-5. The ns-2.35 replacement changes the second call
 to `set_apptype(PT_REALAUDIO)`. Note: `PT_REALAUDIO=50` in ns-2.35
 (was 49 in ns-2.29); resolved symbolically at compile time.
 
-### BUG-3: ns-source.tcl — symbolic PT_FTP constant
+### D2-7 (formerly BUG-3): ns-source.tcl — symbolic PT_FTP constant
 
 The DS4 original uses the literal `27` for `set_apptype`. Verification
 against `ns-2.35/common/packet.h` confirms `PT_FTP=27`, `PT_HTTP=31` —
@@ -566,17 +572,17 @@ described it as PT_HTTP). The ns-2.35 fix replaces the literal with a
 Tcl variable `set PT_FTP 27 ;# symbolic constant mirroring common/packet.h`
 and uses `$::PT_FTP` throughout, for readability and robustness.
 
-### BUG-4: dsscheduler.cc — SFQ empty() before front()
+### D2-4 (formerly BUG-4): dsscheduler.cc — SFQ empty() before front()
 
 In `dsSFQ::DequeEvent()`, the original calls `FlowQueue.front()` before
 `empty()`, which is undefined behaviour in C++ when the queue is empty.
 The ns-2.35 replacement reorders the check: `!empty()` is tested first,
 and `front()` is called only inside the guarded branch.
 
-### BUG-5: ns-source.tcl — complete FTP set_apptype
+### D2-1 (formerly BUG-5): ns-source.tcl — complete FTP set_apptype
 
 The DS4 original only patches `Application/FTP::start` with `set_apptype`.
-The ns-2.35 replacement (combined with BUG-3) adds `set_apptype $::PT_FTP`
+The ns-2.35 replacement (combined with D2-7) adds `set_apptype $::PT_FTP`
 to all four instprocs: `start`, `send`, `produce`, `producemore`.
 
 ### UDP header overhead (+28 bytes)

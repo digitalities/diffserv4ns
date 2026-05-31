@@ -1,0 +1,37 @@
+name: Stratum codename feedback
+description: Feedback on the project's provisional v1.0 codename
+title: "[naming] "
+labels: ["kind/naming"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The current project codename — **Stratum** — is provisional for v1.0. The permanent name will be finalised after community feedback (deadline ≈ 2026-12-06). Your input directly informs that decision.
+  - type: dropdown
+    id: preference
+    attributes:
+      label: Your preference
+      options:
+        - "Keep Stratum"
+        - "Suggest an alternative"
+        - "Drop the codename — use only descriptive 'ns-3 QoS substrate' framing"
+        - "No preference"
+    validations:
+      required: true
+  - type: input
+    id: alternative
+    attributes:
+      label: "If 'Suggest an alternative': what name?"
+      placeholder: "e.g., 'Tiers', 'Stack', 'Mosaic', 'Foundry', ..."
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: "Why does this work (or not work)? Etymology, vendor/IETF collisions, pronunciation, citation feel — all welcome."
+    validations:
+      required: true
+  - type: input
+    id: citation
+    attributes:
+      label: How would you cite the project?
+      placeholder: "e.g., 'Andreozzi, S. (2026). Stratum: A QoS Substrate...' or 'ns-3 QoS substrate (Andreozzi 2026)' — actual BibTeX or English"

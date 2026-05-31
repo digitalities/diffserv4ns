@@ -48,10 +48,10 @@
 
 /*
  * ns-2.35 port: this file replaces src/ns-2.29/realaudio/realaudio.cc.
- * BUG-2 fix: second call changed from set_pkttype(PT_UDP) to set_apptype(PT_REALAUDIO)
+ * D2-6 fix: second call changed from set_pkttype(PT_UDP) to set_apptype(PT_REALAUDIO)
  * so transport type stays PT_UDP and DiffServ classifier reads correct app_type_.
  * Note: PT_REALAUDIO=50 in ns-2.35 (was 49 in ns-2.29); resolved symbolically at compile time.
- * See docs/HISTORICAL_BUGS.md BUG-2.
+ * See docs/HISTORICAL_BUGS.md D2-6.
  */
 
 //
@@ -137,7 +137,7 @@ void RA_Traffic::init()
 	rem_ = 0;
 	if (agent_) {
 		agent_->set_pkttype(PT_UDP);
-                agent_->set_apptype(PT_REALAUDIO);} // BUG-2 fix: was set_pkttype(PT_UDP) — see HISTORICAL_BUGS.md BUG-2
+                agent_->set_apptype(PT_REALAUDIO);} // D2-6 fix: was set_pkttype(PT_UDP) — see HISTORICAL_BUGS.md D2-6
 }
 
 double RA_Traffic::next_interval(int& size)

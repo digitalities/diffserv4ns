@@ -385,12 +385,28 @@ double dsREDQueue::getStat(int argc, const char*const* argv) {
          return (s_TCPcwnd);
 		if (strcmp(argv[2], "TCPrtt") == 0)
          return (s_TCPrtt);
+		// D2-8 (2001-era arg-swap, fixed 2026-04-26): TCPbReTX returns
+		// the bytes accumulator; TCPnReTX returns the count. The 2001
+		// Tcl dispatch swapped these. TCPbGoTX was already correct.
+		// Active consumers in scenario-2-ns235*.tcl + example-2.tcl
+		// computed goodput as `bytes / (bytes + count)` — biased. The
+		// same swap is present in ns-2.29 (frozen) and is documented
+		// in docs/HISTORICAL_BUGS.md §D2-8.
 		if (strcmp(argv[2], "TCPbReTX") == 0)
-         return (s_TCPnReTX);
+         return (s_TCPbReTX);
 		if (strcmp(argv[2], "TCPbGoTX") == 0)
          return (s_TCPbGoTX);
 		if (strcmp(argv[2], "TCPnReTX") == 0)
-         return (s_TCPbReTX);
+         return (s_TCPnReTX);
+		// Byte-unit aliases for cross-impl naming/units parity with
+		// the ns-3 DiffServStatistics::RecordOrigBytes /
+		// RecordRetxBytes accessors (which return bytes, not KB).
+		// TCPbGoTX / TCPbReTX remain in KB for ns-2.35 native
+		// compatibility with pre-existing consumer scripts.
+		if (strcmp(argv[2], "origBytes") == 0)
+         return (s_TCPbGoTX * 1024.0);
+		if (strcmp(argv[2], "retxBytes") == 0)
+         return (s_TCPbReTX * 1024.0);
 
 	 	if (strcmp(argv[2], "%drops") == 0)
          return (s_pkts>0?s_drops*100/s_pkts:0);

@@ -1,0 +1,14 @@
+# The 2001 ns-2.29 DiffServ4NS sources under src/ns-2.29/ are frozen
+# per CLAUDE.md ("Do not modify files under ns2/. The 2001 ns-2 module
+# is read-only, period."). Accidentally reformatting them (manually or
+# via an IDE / agent) would violate that rule silently. This file opts
+# the entire subtree out of clang-format.
+#
+# The ancestor walkup stops here, not at the project-root .clang-format,
+# so both manual clang-format invocations and check-style-clang-format.py
+# respect the disable.
+---
+Language: Cpp
+DisableFormat: true
+SortIncludes: Never
+...

@@ -262,7 +262,7 @@ int edgeQueue::command(int argc, const char*const* argv) {
     return(TCL_OK);
   };
 
-  // BUG-10 (2026-04-18): per-policy RNG stream isolation.
+  // D2-3 (2026-04-18): per-policy RNG stream isolation.
   // Syntax: $edge policyRngStream <policyName> <stream>
   //         where policyName is "TSW2CM" | "TSW3CM" | "FW".
   // Opt-in hardening: not calling it preserves the pre-fix default of

@@ -1,60 +1,97 @@
 cff-version: 1.2.0
-title: "DiffServ4NS for ns-2"
-message: "If you use this software, please cite the ISCC 2002 paper and the Zenodo archive record."
+title: "Stratum: A QoS Substrate for ns-3 Composing DiffServ, L4S, and CAKE"
+message: >-
+  If you use this software in academic work, please cite both the
+  software (this entry, repository-code) and the substrate paper
+  (preferred-citation below) once it is published.  When reproducing
+  ns-2 results specifically, also cite the 2001 thesis and the 2002
+  ISCC paper (references below); the ns-2 sources are deposited as a
+  separate archival Zenodo record (DOI 10.5281/zenodo.19665019).
 type: software
-version: "v1.0-archival"
 authors:
-  - family-names: Andreozzi
-    given-names: Sergio
+  - given-names: Sergio
+    family-names: Andreozzi
+    email: sergio.andreozzi@gmail.com
     orcid: "https://orcid.org/0000-0001-5567-4000"
-license: GPL-2.0
+    affiliation: "Independent Researcher"
+version: "v1.0-icns3-submission"
+date-released: "2026-05-24"
+license: GPL-2.0-only
 repository-code: "https://github.com/digitalities/diffserv4ns"
-url: "https://digitalities.github.io/diffserv4ns/"
+url: "https://github.com/digitalities/diffserv4ns"
+abstract: >-
+  Stratum is a composable QoS substrate for ns-3 hosting Differentiated
+  Services, Low Latency Low Loss Scalable-throughput (L4S), and Common
+  Applications Kept Enhanced (CAKE) as three first-class clients.  Four
+  pluggable primitives — Classify-and-Meter, Mark-and-Route, a per-class
+  Slot array, and an across-slot Service Policy — let any client compose
+  a queueing discipline by picking one strategy per stage.  The substrate
+  inherits the 2001 DiffServ4NS ns-2 module as its classical-DiffServ
+  client; the 2001 ns-2.29 sources are preserved verbatim under
+  src/ns-2.29/ alongside a 2026 ns-2.35 port layer fixing nine latent
+  defects without altering the 2001 design (companion archive
+  10.5281/zenodo.19665019).  "Stratum" is a provisional codename for
+  v1.0 pending peer-review and community feedback.
 keywords:
   - DiffServ
-  - QoS
-  - ns-2
-  - ns-2.29
-  - ns-2.35
-  - network simulation
-  - scheduling
+  - L4S
+  - DualPI2
+  - CAKE
+  - COBALT
+  - tc-cake
+  - FqCobalt
+  - "fair queueing"
   - WFQ
-  - WF2Q+
+  - "WF2Q+"
   - SCFQ
   - SFQ
   - LLQ
-  - research software
-  - archive
+  - ns-3
+  - ns-2
+  - ns-2.29
+  - ns-2.35
+  - "active queue management"
+  - AQM
+  - "quality of service"
+  - "traffic control"
+  - "network simulation"
+  - "RFC 2474"
+  - "RFC 2697"
+  - "RFC 2698"
+  - "RFC 7928"
+  - "RFC 9331"
+  - "RFC 9332"
+  - "research software"
   - reproducibility
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.19665019"
-    description: "Zenodo concept DOI (resolves to the latest version of the ns-2 archive)."
+    value: "10.5281/zenodo.19986401"
+    description: "Concept DOI (Zenodo software record; resolves to the latest version)."
   - type: doi
-    value: "10.5281/zenodo.19665020"
-    description: "Zenodo version DOI (pins the v1.0-archival snapshot)."
-date-released: "2026-04-23"
+    value: "10.5281/zenodo.19986696"
+    description: "Concept DOI (Zenodo paper preprint)."
+  - type: doi
+    value: "10.5281/zenodo.19986700"
+    description: "Concept DOI (Zenodo technical report; long-form port narrative)."
+  - type: doi
+    value: "10.5281/zenodo.19665019"
+    description: "Companion concept DOI (Zenodo ns-2 archive — 2001 original on ns-2.29 + 2026 ns-2.35 port layer)."
 preferred-citation:
   type: conference-paper
-  title: "Differentiated services: an experimental vs. simulated case study"
+  title: "Stratum: A QoS Substrate for ns-3 Composing DiffServ, L4S, and CAKE"
   authors:
     - family-names: Andreozzi
       given-names: Sergio
       orcid: "https://orcid.org/0000-0001-5567-4000"
-  collection-title: "Proceedings of the Seventh IEEE Symposium on Computers and Communications (ISCC 2002)"
-  conference:
-    name: "ISCC 2002"
-    city: "Taormina"
-    country: "IT"
-    date-start: "2002-07-01"
-    date-end: "2002-07-04"
-  year: 2002
-  start: 383
-  end: 390
-  isbn: "0-7695-1671-8"
-  doi: "10.1109/ISCC.2002.1021705"
-  publisher:
-    name: "IEEE Computer Society"
+      affiliation: "Independent Researcher"
+  year: 2026
+  notes: >-
+    Submitted to ICNS3 2026 (International Conference on ns-3),
+    Naples, Italy, October 19-21, 2026.  Update with the proceedings
+    DOI when available.  Companion preprint:
+    https://doi.org/10.5281/zenodo.19986696.  Companion 28-page
+    technical report (long-form port narrative):
+    https://doi.org/10.5281/zenodo.19986700.
 references:
   - type: thesis
     title: "DiffServ simulations using the Network Simulator: requirements, issues and solutions"
@@ -66,3 +103,26 @@ references:
     institution:
       name: "Lappeenranta University of Technology / Universita degli Studi di Pisa"
     thesis-type: "Master's thesis"
+    doi: "10.5281/zenodo.19662899"
+    notes: "Authoritative design specification of the original DiffServ4NS module (Chapter 3.3.3, Figure 3.11)."
+  - type: conference-paper
+    title: "Differentiated Services: An Experimental vs. Simulated Case Study"
+    authors:
+      - family-names: Andreozzi
+        given-names: Sergio
+        orcid: "https://orcid.org/0000-0001-5567-4000"
+    collection-title: "Proceedings of the Seventh IEEE Symposium on Computers and Communications (ISCC 2002)"
+    conference:
+      name: "ISCC 2002"
+      city: "Taormina"
+      country: "IT"
+      date-start: "2002-07-01"
+      date-end: "2002-07-04"
+    year: 2002
+    start: 383
+    end: 390
+    isbn: "0-7695-1671-8"
+    doi: "10.1109/ISCC.2002.1021705"
+    publisher:
+      name: "IEEE Computer Society"
+    notes: "Peer-reviewed distillation of the 2001 thesis. Open-access preprint at https://doi.org/10.5281/zenodo.19665017."

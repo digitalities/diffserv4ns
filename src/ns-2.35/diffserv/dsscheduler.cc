@@ -71,8 +71,8 @@
 
 /*
  * ns-2.35 port: this file replaces src/ns-2.29/diffserv/dsscheduler.cc.
- * BUG-4 fix: in dsSFQ::DequeEvent(), empty() check moved before front() to eliminate
- * undefined behaviour when a flow queue is empty. See docs/HISTORICAL_BUGS.md BUG-4.
+ * D2-4 fix: in dsSFQ::DequeEvent(), empty() check moved before front() to eliminate
+ * undefined behaviour when a flow queue is empty. See docs/HISTORICAL_BUGS.md D2-4.
  */
 
 #include "dsconsts.h"
@@ -488,7 +488,7 @@ int dsSFQ::DequeEvent()
   double MinStartTag=MAXDOUBLE;
 
   for (int i=0; i<NumQueues; i++) {
-	// BUG-4 fix: empty() before front() — see HISTORICAL_BUGS.md
+	// D2-4 fix: empty() before front() — see HISTORICAL_BUGS.md
 	if (!flow[i].FlowQueue.empty()) {
 		PacketTags=flow[i].FlowQueue.front();
 		if (PacketTags.StartTag<MinStartTag) {

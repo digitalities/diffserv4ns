@@ -42,8 +42,8 @@ The Zenodo deposit provides the PDF directly; the concept DOI above always resol
 
 See [`docs/installation.md`](docs/installation.md) for full instructions. Quick-start:
 
-- **ns-2.29 Docker build:** `./scripts/fetch-ns2-allinone-229.sh && ./scripts/build-ns2-allinone-229-docker.sh && ./scripts/patch-ns2-diffserv-229.sh && ./scripts/build-ns2-allinone-229-docker.sh`
-- **ns-2.35 Docker build:** same pattern with `-235` script suffixes.
+- **ns-2.29 Docker build:** `./scripts/fetch-ns2-allinone.sh && ./scripts/patch-ns2-diffserv.sh && ./scripts/build-ns2-allinone-docker.sh`
+- **ns-2.35 Docker build:** `./scripts/patch-ns2-diffserv-235.sh && ./scripts/build-ns2-allinone-235-docker.sh` — see [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the full setup.
 - **Legacy (ns-2.29 only, direct-install):** see the Legacy section in [`docs/installation.md`](docs/installation.md).
 
 Verified on macOS (Apple Silicon) and Linux in 2026.
@@ -67,9 +67,9 @@ examples/
   webtraf-ns235-test/        WebTraf regression tests for the ns-2.35 port
   common/apptypes.tcl        Shared application-type constants
 scripts/
-  fetch-ns2-allinone-{229,235}.sh    Download ns-allinone source trees
-  build-ns2-allinone-{229,235}-docker.sh   Build ns-2 in Docker (Ubuntu 18.04 + GCC 7)
-  patch-ns2-diffserv-{229,235}.sh    Patch DiffServ4NS into the ns-2 source tree
+  fetch-ns2-allinone.sh                  Download the ns-allinone source tree
+  build-ns2-allinone[-235]-docker.sh     Build ns-2 in Docker (Ubuntu 18.04 + GCC 7)
+  patch-ns2-diffserv[-235].sh            Patch DiffServ4NS into the ns-2 source tree
 docs/
   installation.md                    Build guide (Docker + legacy; 2.29 and 2.35 paths)
   architecture.md                    Module design overview

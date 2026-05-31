@@ -1,0 +1,28 @@
+{
+  "aqms": [
+    {"name": "ns3::PfifoFastQueueDisc", "fileTag": "PfifoFast", "displayName": "PfifoFast", "family": "single", "supportsEcn": false},
+    {"name": "ns3::RedQueueDisc", "fileTag": "Red", "displayName": "RED", "family": "single", "supportsEcn": true},
+    {"name": "ns3::AdaptiveRedQueueDisc", "fileTag": "AdaptiveRed", "displayName": "Adaptive RED", "family": "single", "supportsEcn": true},
+    {"name": "ns3::CoDelQueueDisc", "fileTag": "CoDel", "displayName": "CoDel", "family": "single", "supportsEcn": true},
+    {"name": "ns3::PieQueueDisc", "fileTag": "Pie", "displayName": "PIE", "family": "single", "supportsEcn": true},
+    {"name": "ns3::CobaltQueueDisc", "fileTag": "Cobalt", "displayName": "Cobalt", "family": "single", "supportsEcn": true},
+    {"name": "ns3::FqCoDelQueueDisc", "fileTag": "FqCoDel", "displayName": "FQ-CoDel", "family": "fq", "supportsEcn": true},
+    {"name": "ns3::FqPieQueueDisc", "fileTag": "FqPie", "displayName": "FQ-PIE", "family": "fq", "supportsEcn": true},
+    {"name": "ns3::FqCobaltQueueDisc", "fileTag": "FqCobalt", "displayName": "FQ-Cobalt", "family": "fq", "supportsEcn": true},
+    {"name": "DsRed", "fileTag": "DsRed", "displayName": "DiffServ RED (RIO-C)", "family": "ds4", "supportsEcn": false},
+    {"name": "DsL4sWred", "fileTag": "DsL4sWred", "displayName": "DualPI2 (classic = WRED)", "family": "ds4", "supportsEcn": true},
+    {"name": "DsL4sCoupledOnly", "fileTag": "DsL4sCoupledOnly", "displayName": "DualPI2 (coupled-only)", "family": "ds4", "supportsEcn": true},
+    {"name": "DsCake", "fileTag": "DsCake", "displayName": "DiffServ CAKE (diffserv4)", "family": "ds4", "supportsEcn": true}
+  ],
+  "scenarios": [
+    "heavy-congestion",
+    "medium-congestion",
+    "mild-congestion",
+    "mixed",
+    "rt-bulk",
+    "steady",
+    "tcp-aggressive",
+    "tcp-friendly",
+    "tcp-unresponsive"
+  ]
+}
