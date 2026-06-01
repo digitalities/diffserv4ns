@@ -69,6 +69,15 @@ readonly SCAN_PATHS_MD=(
   "specs"
 )
 
+# provenance/ ships wholesale in the public release (frozen reference excerpts
+# plus the LINEAGE docs), so it is release-bound and must be jargon-clean. It is
+# scanned like SCAN_PATHS_MD but with one carve-out applied in the loop below:
+# the decision-record-number pattern is skipped, because bare ADR-NNNN is the
+# sanctioned citation form in shipped docs and the LINEAGE files cite ADRs by id.
+readonly SCAN_PATHS_PROVENANCE=(
+  "provenance"
+)
+
 # Individual top-level markdown files that ship in the release and form the
 # reader's front page. Scanned the same way as SCAN_PATHS_MD but as named
 # files (they live at the repo root, not under a scanned directory).
@@ -135,7 +144,7 @@ readonly PATTERNS=(
   "spec-id-structural|\\bS-[0-9]+\\.[0-9]+\\b"
   "finding-id|\\bF-[A-D]\\b|Finding F-[A-Z]"
   "postponed-dir-ref|(handbook|guide)/[a-z0-9-]+\\.md|handbook chapter [0-9]"
-  "internal-plan-path|docs/superpowers/"
+  "internal-plan-path|docs/(superpowers|methodology|prompts|audit|cpp-review-reports)/"
   "internal-adr-path|docs/adr/[0-9]"
   "internal-style-doc-ref|docs/ns3-doxygen-style\\.md"
   "serena-memory-path|reference_ns3_[a-z0-9_]+\\.md|feedback_[a-z0-9_]+\\.md|project_[a-z0-9_]+\\.md"
@@ -156,6 +165,7 @@ readonly ALLOWLIST_PATTERNS=(
   '\bN2-[0-9]+\b'                 # ns-2 core defects (HISTORICAL_BUGS public)
   '\bD2-[0-9]+\b'                 # DS4-for-ns-2 defects (HISTORICAL_BUGS public)
   '\bN3-[0-9]+\b'                 # ns-3 core defects (HISTORICAL_BUGS public)
+  'Experiment Report, Phase'      # Ferrari 2000 publication title, not a phase label
 )
 
 # Returns 0 (true) if any allowlist pattern matches @p line.
@@ -241,6 +251,29 @@ for md_file in "${SCAN_FILES_MD[@]}"; do
       printf '%s:%s [%s] %s\n' "$file" "$line" "$label" "$content" >> /tmp/lint-jargon.out
       violations=$((violations + 1))
     done < <(grep -HnE "$regex" "$md_file" 2>/dev/null || true)
+  done
+done
+
+for path in "${SCAN_PATHS_PROVENANCE[@]}"; do
+  if [ ! -d "$path" ]; then
+    continue
+  fi
+  for entry in "${PATTERNS[@]}"; do
+    label="${entry%%|*}"
+    # Bare ADR-NNNN is the sanctioned citation form in shipped docs/provenance,
+    # so the decision-record-number pattern is skipped for this tree only.
+    if [ "$label" = "decision-record-number" ]; then
+      continue
+    fi
+    regex="${entry#*|}"
+    while IFS=: read -r file line content; do
+      [ -z "$file" ] && continue
+      if is_allowlisted "$content"; then
+        continue
+      fi
+      printf '%s:%s [%s] %s\n' "$file" "$line" "$label" "$content" >> /tmp/lint-jargon.out
+      violations=$((violations + 1))
+    done < <(grep -rnE "${FILE_GLOBS_MD[@]}" "$regex" "$path" 2>/dev/null || true)
   done
 done
 

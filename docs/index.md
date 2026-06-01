@@ -4,7 +4,7 @@
 
 DiffServ4NS was written in 2001 as part of an MSc thesis at Lappeenranta University of Technology (Finland) and the University of Pisa (Italy). It extends the stock ns-2 DiffServ module (Nortel Networks, 2000) with five fair-queueing schedulers, multiple traffic meters, per-DSCP monitoring, and a composable edge/core router architecture.
 
-> **Two eras, one lineage.** The **ns-2** code (versions 2.29 and 2.35) is preserved for historical reference — the ns-2.29 C++ source has not changed since 2001, and the ns-2.35 port is additive. Active development has moved to an **ns-3** substrate (codename *Stratum*) that composes Differentiated Services, L4S, and CAKE as three first-class clients of one QoS module. See the [ns-3 README](../README-ns-3.md) and [`src/ns-3/`](../src/ns-3/).
+> **Two eras, one lineage.** The **ns-2** code (versions 2.29 and 2.35) is preserved for historical reference — the ns-2.29 C++ source has not changed since 2001, and the ns-2.35 port is additive. Active development has moved to an **ns-3** substrate (*Stratum*) that composes Differentiated Services, L4S, and CAKE as three first-class clients of one QoS module. See the [ns-3 README](../README-ns-3.md) and [`src/ns-3/`](../src/ns-3/).
 
 ## Features
 

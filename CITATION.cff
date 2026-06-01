@@ -30,8 +30,7 @@ abstract: >-
   client; the 2001 ns-2.29 sources are preserved verbatim under
   src/ns-2.29/ alongside a 2026 ns-2.35 port layer fixing nine latent
   defects without altering the 2001 design (companion archive
-  10.5281/zenodo.19665019).  "Stratum" is a provisional codename for
-  v1.0 pending peer-review and community feedback.
+  10.5281/zenodo.19665019).
 keywords:
   - DiffServ
   - L4S
@@ -65,15 +64,6 @@ keywords:
   - reproducibility
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.19986401"
-    description: "Concept DOI (Zenodo software record; resolves to the latest version)."
-  - type: doi
-    value: "10.5281/zenodo.19986696"
-    description: "Concept DOI (Zenodo paper preprint)."
-  - type: doi
-    value: "10.5281/zenodo.19986700"
-    description: "Concept DOI (Zenodo technical report; long-form port narrative)."
-  - type: doi
     value: "10.5281/zenodo.19665019"
     description: "Companion concept DOI (Zenodo ns-2 archive — 2001 original on ns-2.29 + 2026 ns-2.35 port layer)."
 preferred-citation:
@@ -87,11 +77,8 @@ preferred-citation:
   year: 2026
   notes: >-
     Submitted to ICNS3 2026 (International Conference on ns-3),
-    Naples, Italy, October 19-21, 2026.  Update with the proceedings
-    DOI when available.  Companion preprint:
-    https://doi.org/10.5281/zenodo.19986696.  Companion 28-page
-    technical report (long-form port narrative):
-    https://doi.org/10.5281/zenodo.19986700.
+    Naples, Italy, October 19-21, 2026; under peer review.  Citation
+    and DOI will be updated once the paper is published.
 references:
   - type: thesis
     title: "DiffServ simulations using the Network Simulator: requirements, issues and solutions"

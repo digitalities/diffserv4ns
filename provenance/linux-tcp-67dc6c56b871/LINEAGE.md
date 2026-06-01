@@ -1,15 +1,13 @@
 # Linux TCP core provenance — pinned commit `67dc6c56b871`
 
 This directory holds a frozen, citable snapshot of four Linux kernel TCP
-core files used for the static cadence comparison documented in
-`docs/methodology/ns3-vs-linux-tcp-cadence-static-comparison.md` (per
-ADR-0107) and consumed by future probes targeting cross-flow phase
-coherence at the variant-invariant TCP layer.
+core files used for a static cadence comparison between ns-3 and Linux
+TCP, and consumed by probes targeting cross-flow phase coherence at the
+variant-invariant TCP layer.
 
 The pinned SHA is the same as `provenance/linux-sch-cake-67dc6c56b871/`
 so that all "recent-stable" Linux references in the project anchor to a
-single kernel snapshot, per
-`reference_provenance_dual_anchoring` (auto-memory) and ADR-0092.
+single kernel snapshot (per ADR-0092).
 
 ## Pinned commit
 
@@ -37,8 +35,7 @@ the DelAck scheduling, the pacing/TSQ infrastructure, and the timer
 management. They do NOT contain congestion-control variant implementations
 (those live in `tcp_cubic.c`, `tcp_bbr.c`, etc., which are out of scope for
 the cross-flow phase coherence question per the TCP-variant-invariance
-prior established in
-[Phase 1.5](../../docs/methodology/phase-effects-input-pattern-residual.md#1-the-residual-after-path-a)).
+prior established earlier in the project).
 
 ## Authoritative use
 
@@ -56,4 +53,3 @@ Total: 17,655 lines.
 - ADR-0107 — this provenance addition + static comparison rationale
 - ADR-0092 — sch_cake.c provenance pattern (model for this addition)
 - `provenance/linux-sch-cake-67dc6c56b871/` — sister provenance dir at the same SHA
-- `docs/methodology/ns3-vs-linux-tcp-cadence-static-comparison.md` — the deliverable consuming these files

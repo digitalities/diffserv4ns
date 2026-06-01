@@ -57,8 +57,8 @@ DiffServ4NS-original).
 | `cake_overhead()` formula (raw / ATM / MPU) | per-packet wire-byte arithmetic | `DsCakeHelper::ConfigureLinkLayerOverhead` (statistical-mode rate adjustment) |
 | `cake_advance_shaper` per-tin three-branch advance + `cake_enqueue` hard idle-reset (two-site catchup); per-tin and global virtual clocks | line-for-line correspondence with `sch_cake.c`; per-tin `time_next_packet`, global `q->time_next_packet`, per-packet `adj_len` from `cake_calc_overhead` | `RateBasedTinClock` POD + `RateBasedGlobalClock` POD inside `DsRateBasedShaperDispatcher`; selectable via `DsCakeHelper::ShaperMode::RateBased` (path β); fixtures S-17.39..44 |
 | `tc-cake(8)` knob names + units | `overhead`, `atm`, `mpu`, `raw`, `wash`, `memlimit`, `bandwidth`, `ack-filter`, `ack-filter-aggressive`, `triple-isolate` | DiffServ4NS attributes use the same names where applicable |
-| `split-gso` — enqueue-time GSO/GRO super-packet segmentation | `skb_shinfo->gso_segs`-driven segment expansion before per-flow enqueue | _(deferred — kernel-coupled; ns-3 has no GSO/GRO equivalent and no upstream proposal exists; see docs/superpowers/plans/2026-05-07-cake-op-flags-deferral.md)_ |
-| `fwmark MASK` — netfilter conntrack mark used as a per-tin classification key | `skb->mark` set via netfilter conntrack or iptables `MARK` rules; CAKE consumes the masked value as a tin override | _(deferred — kernel-coupled; needs Ds5tupleMarkTag substrate primitive and a marking helper; design proposal post-paper Phase 2+)_ |
+| `split-gso` — enqueue-time GSO/GRO super-packet segmentation | `skb_shinfo->gso_segs`-driven segment expansion before per-flow enqueue | _(deferred — kernel-coupled; ns-3 has no GSO/GRO equivalent and no upstream proposal exists)_ |
+| `fwmark MASK` — netfilter conntrack mark used as a per-tin classification key | `skb->mark` set via netfilter conntrack or iptables `MARK` rules; CAKE consumes the masked value as a tin override | _(deferred — kernel-coupled; needs Ds5tupleMarkTag substrate primitive and a marking helper; design proposal deferred to future work)_ |
 
 ## Out-of-scope features (not inherited; not implemented in v1)
 

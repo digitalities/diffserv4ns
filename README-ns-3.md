@@ -1,25 +1,10 @@
-# DiffServ4NS for ns-3 — codename *Stratum*
+# DiffServ4NS for ns-3 — *Stratum*
 
 *Scope: this document covers the **ns-3 substrate** of the DiffServ4NS
 project — a QoS substrate composing DiffServ, L4S, and CAKE in
 [ns-3](https://www.nsnam.org/). For the ns-2 archive see
 [`README-ns-2.md`](README-ns-2.md); for the project overview see the
 release [`README.md`](README.md).*
-
-> **Codename: *Stratum*.** This module ships under the provisional
-> codename *Stratum* for v1.0. The codename is a stable handle for
-> review and citation; the permanent project name and repository home
-> will be finalised after community feedback during peer review and
-> post-publication discussions. We will commit to one of:
->
-> - adopt *Stratum* as the permanent name (keep the embedded structure under DiffServ4NS, or split into a standalone repository);
-> - replace the codename with a community-suggested name;
-> - drop the codename and revert to a descriptive label.
->
-> The code, DOIs, and attribution are stable; only the surface label may
-> change. See the project ADR record for the deferral rationale and
-> decision deadline (six months post-publication, or earlier on clear
-> external signal).
 
 This is the active variant of the DiffServ4NS lineage. Where the ns-2
 archive (`src/ns-2.29/` and `src/ns-2.35/`) preserves the 2001 module as
@@ -68,8 +53,9 @@ Extensions over what the 2001 DiffServ4NS module provided:
   byte / packet / drop / mark counters matching `tc -s qdisc show`;
   per-flow goodput.
 - **Reproducibility:** the ICNS3 paper figures reproduce from this tree
-  via the recipes under `reproducibility/` (when present in the
-  release mirror).
+  via the per-scenario recipe map in
+  [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) and the
+  `scripts/reproduce-paper.sh` driver.
 
 ## Quickstart
 
@@ -81,27 +67,49 @@ cd ns3/ns-3-dev
 ./ns3 configure --enable-tests --enable-examples
 ./ns3 build diffserv
 ./ns3 run diffserv-example-1
-python3 test.py -s diffserv -v          # full test suite
+python3 test.py -s diffserv -v          # core DiffServ suite (see "Test suites")
 ```
 
 The fetch script clones the pinned ns-3-dev revision, applies any
 in-tree patches under `patches/ns3/`, and creates the
 `contrib/diffserv → src/ns-3` symlink that ns-3 expects.
 
+## Test suites
+
+The module registers a suite per component area. ns-3's `test.py -s`
+takes a single exact suite name, so run them individually or loop over
+the module's full set:
+
+```bash
+python3 test.py -s diffserv -v           # DiffServ core (+ RFC 2697/2698 vectors)
+python3 test.py -s diffserv-l4s -v       # L4S DualPI2 (RFC 9331/9332)
+python3 test.py -s diffserv-cake-q15 -v  # CAKE composition
+
+# Run every diffserv-module suite in turn:
+for s in $(./ns3 run "test-runner --print-test-name-list" 2>/dev/null \
+           | grep -E '^(diffserv|ds-trace-replay|tcp-gso-egress)'); do
+  python3 test.py -s "$s"
+done
+```
+
+| Component | Suites |
+|---|---|
+| **DiffServ core** | `diffserv`, `diffserv-meter-trace`, `diffserv-per-flow-classifier`, `diffserv-wf2qp-regression`, `diffserv-q16-chang-convergence`, `diffserv-q17-parekh-theorem1` |
+| **L4S** | `diffserv-l4s`, `diffserv-count-ack-jitter`, `tcp-gso-egress` |
+| **CAKE** | `diffserv-cake-q15`, `diffserv-cake-host-iso-phase-1`, `diffserv-cake-host-fairness-smoke`, `diffserv-cake-host-fairness-udp-smoke`, `diffserv-flent-sink` |
+| **Instrumentation** | `diffserv-example-1-instrumentation`, `diffserv-empirical-cdf-loader`, `ds-trace-replay-application` |
+
+RFC conformance vectors run inside these registered suites: RFC 2697 /
+2698 metering in `diffserv` and `diffserv-meter-trace`, and RFC 9331 /
+9332 L4S identification and coupling in `diffserv-l4s`.
+
 ## Citation
 
-Cite the ICNS3 2026 paper:
-
-- **Stratum: A QoS Substrate Composing DiffServ, L4S, and CAKE in
-  ns-3.** S. Andreozzi. Workshop on ns-3 (WNS3 / ICNS3) 2026.
-- Software Zenodo DOI: 10.5281/zenodo.19986401 *(provisional title;
-  reflects codename status)*.
-- Paper preprint Zenodo DOI: 10.5281/zenodo.19986696.
-- Tech-report Zenodo DOI: 10.5281/zenodo.19986700.
-
 A `CITATION.cff` at the repository root provides machine-readable
-metadata; the release's Variants table (in [`README.md`](README.md))
-links the ns-3 row to this document and to the software DOI.
+citation metadata for this software. A paper describing the substrate is
+under peer review; its citation and DOI will be added here once it is
+published. Until then, please cite the software repository and — for the
+inherited DiffServ4NS lineage — the 2001 thesis below.
 
 ## The 2001 thesis
 

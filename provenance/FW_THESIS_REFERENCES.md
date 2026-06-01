@@ -2,7 +2,7 @@
 
 **Date:** 2026-04-15
 **Purpose:** Determine what the 2001 thesis says about the FW meter, specifically whether the three penalty modes (deterministic, probabilistic, periodic) were intentional design alternatives or primary-vs-fallback.
-**Context:** Phase 6 Open Question 2.
+**Context:** open design-intent question on the FW meter.
 
 ---
 
@@ -166,7 +166,7 @@ The ns-3 port should preserve the name FW (for DiffServ4NS compatibility) but do
 
 ---
 
-## Implications for Phase 6
+## Implications for the port
 
 1. **No thesis-level specification exists for FW.** The algorithm's specification is the source code itself (both `SFDPolicy` in ns-2.29-pristine and `FWPolicy` in DiffServ4NS). Test vectors must be derived from the code.
 
