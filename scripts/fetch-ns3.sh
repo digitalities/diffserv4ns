@@ -314,6 +314,17 @@ _preflight_patches() {
 
 PATCH_DIR="$REPO_ROOT/patches/ns3"
 if [ "$SOURCE_ONLY" -eq 0 ] && [ -d "$PATCH_DIR" ]; then
+    # Start from a pristine pinned baseline so patch (re)application is
+    # idempotent. Some patches modify regions of shared files (e.g.
+    # tcp-socket-base, traffic-control-layer) that later patches also touch,
+    # so on an already-patched tree they are not cleanly reverse-detectable
+    # and a working-tree-only apply has no blob for --3way to merge against.
+    # Re-running from a clean baseline sidesteps that entirely: every patch
+    # applies via straight `git apply`. Reset tracked files to the pin and drop
+    # untracked patch-created files under src/; build/ and cmake-cache/ are kept.
+    echo "Resetting $TARGET to the pinned baseline before applying patches..."
+    (cd "$TARGET" && git reset --hard "$NS3_PIN" >/dev/null 2>&1 && git clean -fdq src/) \
+        || { echo "ERROR: could not reset $TARGET to $NS3_PIN" >&2; exit 1; }
     # Preflight: structured per-patch --check report BEFORE any disk-touching
     # apply. Catches cross-patch drift before the apply loop emits misleading
     # per-file probing output.

@@ -1,31 +1,5 @@
---- a/src/internet/model/tcp-socket-base.h
-+++ b/src/internet/model/tcp-socket-base.h
-@@ -32,6 +32,7 @@ class Node;
- class Packet;
- class TcpL4Protocol;
- class TcpHeader;
-+class UniformRandomVariable;
- class TcpCongestionOps;
- class TcpRecoveryOps;
- class RttEstimator;
-@@ -1528,6 +1529,17 @@ class TcpSocketBase : public TcpSocket
-     // the qdisc to ~2 ms of pacing-rate-equivalent work. Default off.
-     bool m_enableTsq{false};         //!< Opt-in flag for TSQ cap.
-     uint32_t m_tsqLimitBytes{1048576}; //!< Bytes-in-flight cap (1 MB Linux default).
-+
-+    // TCP ACK phase jitter — Floyd & Jacobson 1994 random-phase prescription
-+    // applied at the simulator level. When EnableAckPhaseJitter=true, each
-+    // received ACK in ProcessEstablished is delayed by a uniform
-+    // U[0, AckPhaseJitterMaxUs] microsecond interval before reaching
-+    // ReceivedAck. This breaks the cross-flow phase coherence that ns-3's
-+    // deterministic discrete-event semantics otherwise preserve, which
-+    // Linux's NAPI/softirq scheduling breaks by other means. Default off.
-+    bool m_enableAckPhaseJitter{false};      //!< Opt-in flag for ACK phase jitter.
-+    uint32_t m_ackPhaseJitterMaxUs{100};     //!< Maximum jitter in microseconds.
-+    Ptr<UniformRandomVariable> m_ackPhaseJitterRng; //!< Lazy-init RNG for jitter.
- };
-
- /**
+diff --git a/src/internet/model/tcp-socket-base.cc b/src/internet/model/tcp-socket-base.cc
+index c27e3f3b1..a3d721654 100644
 --- a/src/internet/model/tcp-socket-base.cc
 +++ b/src/internet/model/tcp-socket-base.cc
 @@ -48,6 +48,7 @@
@@ -85,3 +59,33 @@
          }
      }
      else if (tcpflags == TcpHeader::SYN || tcpflags == (TcpHeader::SYN | TcpHeader::ACK))
+diff --git a/src/internet/model/tcp-socket-base.h b/src/internet/model/tcp-socket-base.h
+index c8ff0bb8f..c1e702f47 100644
+--- a/src/internet/model/tcp-socket-base.h
++++ b/src/internet/model/tcp-socket-base.h
+@@ -32,6 +32,7 @@ class Node;
+ class Packet;
+ class TcpL4Protocol;
+ class TcpHeader;
++class UniformRandomVariable;
+ class TcpCongestionOps;
+ class TcpRecoveryOps;
+ class RttEstimator;
+@@ -1528,6 +1529,17 @@ class TcpSocketBase : public TcpSocket
+     // the qdisc to ~2 ms of pacing-rate-equivalent work. Default off.
+     bool m_enableTsq{false};         //!< Opt-in flag for TSQ cap.
+     uint32_t m_tsqLimitBytes{1048576}; //!< Bytes-in-flight cap (1 MB Linux default).
++
++    // TCP ACK phase jitter — Floyd & Jacobson 1994 random-phase prescription
++    // applied at the simulator level. When EnableAckPhaseJitter=true, each
++    // received ACK in ProcessEstablished is delayed by a uniform
++    // U[0, AckPhaseJitterMaxUs] microsecond interval before reaching
++    // ReceivedAck. This breaks the cross-flow phase coherence that ns-3's
++    // deterministic discrete-event semantics otherwise preserve, which
++    // Linux's NAPI/softirq scheduling breaks by other means. Default off.
++    bool m_enableAckPhaseJitter{false};      //!< Opt-in flag for ACK phase jitter.
++    uint32_t m_ackPhaseJitterMaxUs{100};     //!< Maximum jitter in microseconds.
++    Ptr<UniformRandomVariable> m_ackPhaseJitterRng; //!< Lazy-init RNG for jitter.
+ };
+ 
+ /**

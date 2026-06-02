@@ -1,23 +1,5 @@
---- a/src/internet/model/tcp-socket-base.h
-+++ b/src/internet/model/tcp-socket-base.h
-@@ -1540,6 +1540,17 @@ class TcpSocketBase : public TcpSocket
-     bool m_enableAckPhaseJitter{false};      //!< Opt-in flag for ACK phase jitter.
-     uint32_t m_ackPhaseJitterMaxUs{100};     //!< Maximum jitter in microseconds.
-     Ptr<UniformRandomVariable> m_ackPhaseJitterRng; //!< Lazy-init RNG for jitter.
-+
-+    // DelAck phase jitter — receiver-side delayed-ACK timer randomization.
-+    // When EnableDelAckJitter=true, the delayed-ACK timer fires at
-+    // m_delAckTimeout + uniform U[0, DelAckJitterMaxUs] microseconds
-+    // instead of the deterministic m_delAckTimeout. Breaks the cross-flow
-+    // phase coherence introduced by N receivers scheduling DelAck at the
-+    // identical simulated time, an analog of Linux's softirq-driven
-+    // DelAck dispatch which is naturally jittered. Default off.
-+    bool m_enableDelAckJitter{false};        //!< Opt-in flag for DelAck jitter.
-+    uint32_t m_delAckJitterMaxUs{100};       //!< Maximum DelAck jitter in microseconds.
-+    Ptr<UniformRandomVariable> m_delAckJitterRng; //!< Lazy-init RNG for DelAck jitter.
- };
-
- /**
+diff --git a/src/internet/model/tcp-socket-base.cc b/src/internet/model/tcp-socket-base.cc
+index a3d721654..10fa0aa99 100644
 --- a/src/internet/model/tcp-socket-base.cc
 +++ b/src/internet/model/tcp-socket-base.cc
 @@ -258,6 +258,24 @@ TcpSocketBase::GetTypeId()
@@ -66,3 +48,25 @@
              NS_LOG_LOGIC(
                  this << " scheduled delayed ACK at "
                       << (Simulator::Now() + Simulator::GetDelayLeft(m_delAckEvent)).GetSeconds());
+diff --git a/src/internet/model/tcp-socket-base.h b/src/internet/model/tcp-socket-base.h
+index c1e702f47..722b896c9 100644
+--- a/src/internet/model/tcp-socket-base.h
++++ b/src/internet/model/tcp-socket-base.h
+@@ -1540,6 +1540,17 @@ class TcpSocketBase : public TcpSocket
+     bool m_enableAckPhaseJitter{false};      //!< Opt-in flag for ACK phase jitter.
+     uint32_t m_ackPhaseJitterMaxUs{100};     //!< Maximum jitter in microseconds.
+     Ptr<UniformRandomVariable> m_ackPhaseJitterRng; //!< Lazy-init RNG for jitter.
++
++    // DelAck phase jitter — receiver-side delayed-ACK timer randomization.
++    // When EnableDelAckJitter=true, the delayed-ACK timer fires at
++    // m_delAckTimeout + uniform U[0, DelAckJitterMaxUs] microseconds
++    // instead of the deterministic m_delAckTimeout. Breaks the cross-flow
++    // phase coherence introduced by N receivers scheduling DelAck at the
++    // identical simulated time, an analog of Linux's softirq-driven
++    // DelAck dispatch which is naturally jittered. Default off.
++    bool m_enableDelAckJitter{false};        //!< Opt-in flag for DelAck jitter.
++    uint32_t m_delAckJitterMaxUs{100};       //!< Maximum DelAck jitter in microseconds.
++    Ptr<UniformRandomVariable> m_delAckJitterRng; //!< Lazy-init RNG for DelAck jitter.
+ };
+ 
+ /**
