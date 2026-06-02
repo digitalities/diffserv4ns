@@ -7,7 +7,7 @@
 # or `aqm-eval <subcommand> --help` for details.
 #
 # Companion to handbook chapter 13.  Source of truth for the canonical
-# 12-AQM × 9-scenario matrix is `src/ns-3/examples/aqm-eval-runner.cc`.
+# 13-AQM × 9-scenario matrix is `src/ns-3/examples/aqm-eval-runner.cc`.
 
 set -euo pipefail
 
@@ -28,7 +28,8 @@ CANONICAL_AQMS=(
     ns3::CobaltQueueDisc
     ns3::FqCobaltQueueDisc
     DsRed
-    DsL4s
+    DsL4sWred
+    DsL4sCoupledOnly
     DsCake
 )
 
@@ -56,7 +57,7 @@ USAGE
 SUBCOMMANDS
   setup        Fetch ns-3-dev (pinned) + apply local patches + build the runner.
   run          Run a single (scenario, AQM) cell.
-  matrix       Run the canonical 12-AQM × 9-scenario sweep (108 cells).
+  matrix       Run the canonical 13-AQM × 9-scenario sweep (117 cells).
   plot         Render the 3-panel ellipse + Jain-range figure from a matrix dir.
   bistable     5-RngRun FqPie sweep to verify the F-C bistable signature.
   reproduce    Gold path — setup + matrix + plot + verify, end-to-end.
@@ -194,7 +195,7 @@ cmd_run() {
 
 usage_matrix() {
     cat <<'EOF'
-aqm-eval matrix — canonical 12-AQM × 9-scenario sweep (108 cells)
+aqm-eval matrix — canonical 13-AQM × 9-scenario sweep (117 cells)
 
 USAGE
   aqm-eval matrix [--outDir D] [--simTime T] [--rngrun N] [--totalRateBps B]
@@ -206,8 +207,8 @@ OPTIONS
   --totalRateBps B Default 10000000.
 
 NOTE
-  Wall-clock ~30 s on a contemporary laptop.  Output: 108 pairs of
-  CSV + summary (12 AQMs × 9 scenarios).
+  Wall-clock ~30 s on a contemporary laptop.  Output: 117 pairs of
+  CSV + summary (13 AQMs × 9 scenarios).
 EOF
 }
 
@@ -362,7 +363,7 @@ OPTIONS
 WHAT IT DOES
   Single command to reproduce paper figure 5 from a clean checkout:
     1. setup       (fetch ns-3 + build runner)
-    2. matrix      (108 cells)
+    2. matrix      (117 cells)
     3. plot        (3-panel figure)
   Wall-clock budget: ~3-5 minutes including build (~30 s if already built).
 

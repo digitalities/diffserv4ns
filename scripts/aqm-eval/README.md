@@ -6,7 +6,7 @@ characterisation harness:
 | File | Purpose |
 |---|---|
 | `aqm-eval` | Single-binary CLI wrapper (Bash, no deps). Hides the ns-3 build ceremony and exposes subcommands for every common operation. **Recommended entry point.** |
-| `ellipse-plot.py` | Reads the 108-cell matrix and emits the three-panel ellipse + Jain-range figure. Called by `aqm-eval plot`. |
+| `ellipse-plot.py` | Reads the 117-cell matrix and emits the three-panel ellipse + Jain-range figure. Called by `aqm-eval plot`. |
 
 The runner binary itself lives at
 `src/ns-3/examples/aqm-eval-runner.cc`; this directory contains the
@@ -17,7 +17,7 @@ The runner binary itself lives at
 ```bash
 ./scripts/aqm-eval/aqm-eval --help               # subcommand catalogue
 ./scripts/aqm-eval/aqm-eval reproduce            # paper figure 5, end-to-end
-./scripts/aqm-eval/aqm-eval list aqms            # canonical 12 + variants
+./scripts/aqm-eval/aqm-eval list aqms            # canonical 13 (both L4S variants)
 ./scripts/aqm-eval/aqm-eval list scenarios       # canonical 9
 ```
 
@@ -29,7 +29,7 @@ Each subcommand has its own `--help` with options and behaviour.
 |---|---|
 | `setup` | `scripts/fetch-ns3.sh` + configure ns-3 + build `aqm-eval-runner`. Idempotent. |
 | `run` | One (scenario, AQM) cell. Required: `--scenario`, `--aqm`. |
-| `matrix` | Canonical 12-AQM × 9-scenario sweep (108 cells, ~30 s wall-clock). |
+| `matrix` | Canonical 13-AQM × 9-scenario sweep (117 cells, ~30 s wall-clock). |
 | `plot` | Render the three-panel figure from a matrix directory. |
 | `bistable` | 5-RngRun FqPie sweep + verdict against the F-C bistable signature. |
 | `reproduce` | Gold path — `setup` + `matrix` + `plot`, end-to-end from a clean checkout. The Zenodo-artefact one-liner. |
@@ -38,7 +38,7 @@ Each subcommand has its own `--help` with options and behaviour.
 
 ## What the figure shows
 
-Three panels over the canonical 108-cell matrix (12 AQMs × 9
+Three panels over the canonical 117-cell matrix (13 AQMs × 9
 RFC-7928 scenarios):
 
 - **Panel A — qdelay × goodput, 1σ ellipse per AQM.** DS4-aware

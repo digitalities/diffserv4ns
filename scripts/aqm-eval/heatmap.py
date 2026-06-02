@@ -295,7 +295,7 @@ def main(argv: list[str]) -> int:
     # ellipse-plot figure.
     fig.suptitle(
         "Full-matrix companion view — every (scenario, AQM) cell visible "
-        "(13 rows = 12 AQMs; DsL4s in 2 modes)",
+        "(13 AQMs; DsL4s in 2 modes)",
         y=0.995, fontsize=12,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.96))

@@ -55,7 +55,7 @@ STEPS=(
     "full|Scenario 1/2/3 cross-simulator equivalence — ns-3 side only (ns-2 needs Docker)|bash \"\$REPO_ROOT/scripts/run-scenario.sh\" example-1 ns3 && bash \"\$REPO_ROOT/scripts/run-scenario.sh\" example-2 ns3 && bash \"\$REPO_ROOT/scripts/run-scenario.sh\" example-3 ns3 --sim-time 60"
     "full|Scheduler GPS-convergence (Chang) sweep|bash \"\$REPO_ROOT/scripts/run-q16-chang-sweep.sh\""
     "full|Parekh-Gallager Theorem 1 latency-bound gate|bash \"\$REPO_ROOT/scripts/run-q17-parekh-gate.sh\""
-    "full|AQM characterisation envelope (12 AQMs x 9 scenarios)|bash \"\$REPO_ROOT/scripts/aqm-eval/aqm-eval\" reproduce"
+    "full|AQM characterisation envelope (13 AQMs x 9 scenarios)|bash \"\$REPO_ROOT/scripts/aqm-eval/aqm-eval\" reproduce"
     "full|CAKE + L4S composition fairness|bash \"\$REPO_ROOT/scripts/l4s-cake-composition-fairness-sweep.sh\""
 )
 

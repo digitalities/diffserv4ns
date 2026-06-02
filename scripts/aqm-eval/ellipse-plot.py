@@ -220,7 +220,7 @@ def plot_jain_vs_goodput(ax, grouped: dict[str, list[dict]]) -> None:
             )
     ax.set_xlabel("Jain fairness index")
     ax.set_ylabel("Aggregate goodput (Mbps)")
-    ax.set_title("Panel A — Fairness vs goodput envelope (1σ)\n9 scenarios × 13 rows (12 AQMs; DsL4s in 2 modes)")
+    ax.set_title("Panel A — Fairness vs goodput envelope (1σ)\n9 scenarios × 13 AQMs (DsL4s in 2 modes)")
     ax.set_xlim(0.55, 1.05)
     ax.set_ylim(6.5, 10.0)
     ax.grid(True, alpha=0.3)

@@ -96,7 +96,7 @@ iproute2 `q_cake.c` `cake_link_layer_keywords[]` pinned at
 ### What landed
 
 A new `examples/aqm-eval-runner` binary that sweeps a 13×9 = 117-cell
-matrix (12 AQMs across 9 RFC-7928-aligned scenarios) and emits per-cell
+matrix (13 AQMs across 9 RFC-7928-aligned scenarios) and emits per-cell
 CSV + summary output for ellipse-style characterisation plots. Nine of
 the AQM cells are mainline ns-3 queue discs (PfifoFast / RED / Adaptive
 RED / CoDel / FQ-CoDel / PIE / FQ-PIE / Cobalt / FQ-Cobalt); four are
