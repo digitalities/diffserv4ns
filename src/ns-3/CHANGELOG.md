@@ -9,7 +9,15 @@ This is a porting project (ns-2 to ns-3), so entries are grouped by development
 phase rather than semantic version.  The original ns-2 module is
 [DiffServ4NS-0.1](https://sourceforge.net/projects/diffserv4ns/) (2001).
 
-Built and tested against ns-3-dev commit `cc48bf5c1` (ns-3.47 + 83).
+Built and tested against ns-3-dev commit `d2add90b4` (ns-3.48).
+
+---
+
+## [Unreleased]
+
+### Changed
+
+- Re-pinned the ns-3 base to the ns-3.48 stable release tag (`d2add90b4`); full regression + audit suite re-validated, no behavioral changes.
 
 ---
 

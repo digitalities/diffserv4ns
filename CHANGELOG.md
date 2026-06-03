@@ -6,7 +6,15 @@ ns-2.35 port layer (`src/ns-2.35/`), and the 2026 ns-3 port
 (`src/ns-3/`, contrib module name `diffserv`).
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-Built and tested against ns-3-dev commit `cc48bf5c1` (ns-3.47 + 83).
+Built and tested against ns-3-dev commit `d2add90b4` (ns-3.48).
+
+---
+
+## [Unreleased]
+
+### Changed
+
+- Re-pinned the ns-3 base to the ns-3.48 stable release tag (`d2add90b4`); full regression + audit suite re-validated, no behavioral changes.
 
 ---
 

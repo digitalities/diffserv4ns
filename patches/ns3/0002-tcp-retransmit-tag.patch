@@ -1,56 +1,11 @@
-From 1c158e897eccdc4e18a7893be5aa3aac7cee8605 Mon Sep 17 00:00:00 2001
-From: Sergio Andreozzi <digitalities@gmail.com>
-Date: Sat, 18 Apr 2026 16:55:39 +0200
-Subject: [PATCH] internet: Add TcpRetransmitTag packet tag stamped on
- retransmissions
-
-Adds ns3::TcpRetransmitTag, a one-byte Tag subclass stamped by
-TcpSocketBase::SendDataPacket when isRetransmission is true. The
-three TCP retx paths (fast retransmit, RTO, SACK) all flow through
-SendDataPacket, so a single stamp point catches them all.
-
-DoForwardUp removes the tag at the receiver, alongside the
-existing SocketPriorityTag strip, so the tag's lifetime is the
-in-simulation path between sender SendDataPacket and receiver
-DoForwardUp. Queue discs, AQM modules, and pcap tracers can read
-it via Packet::PeekPacketTag.
-
-This restores, as a minimal packet tag, the instrumentation that
-ns-2 provided through hdr_tcp::reason_ (set by TcpAgent::output()
-since the early 2000s, read by DiffServ queue discs to compute
-per-class TCP goodput). ns-3 already classifies retransmissions
-internally via TcpSocketBase::TcpPacketType_t::RE_XMT (added in
-!2133 for RFC 3168 ECN compliance), but the classification was not
-exposed to downstream queue discs; this MR adds that bridge.
-
-Regression test tcp-retransmit-tag (internet/test/tcp-retransmit-tag-test.cc)
-uses the TcpGeneralTest harness with a ReceiveListErrorModel that
-drops one segment, forcing a fast retransmit. The sender-side Tx
-trace checks for at least one tagged retransmission and a fresh-Tx
-majority; the receiver-side Rx trace checks that no packet delivered
-to the receiver socket still carries the tag.
-
-Assisted-by: Claude Code (Anthropic, claude-opus-4-7)
----
- RELEASE_NOTES.md                             |   1 +
- src/internet/CMakeLists.txt                  |   3 +
- src/internet/model/tcp-retransmit-tag.cc     |  66 +++++++
- src/internet/model/tcp-retransmit-tag.h      |  72 ++++++++
- src/internet/model/tcp-socket-base.cc        |  12 ++
- src/internet/test/tcp-retransmit-tag-test.cc | 167 +++++++++++++++++
- 6 files changed, 321 insertions(+)
- create mode 100644 src/internet/model/tcp-retransmit-tag.cc
- create mode 100644 src/internet/model/tcp-retransmit-tag.h
- create mode 100644 src/internet/test/tcp-retransmit-tag-test.cc
-
 diff --git a/RELEASE_NOTES.md b/RELEASE_NOTES.md
-index 0fe2cafa4..02b05ddae 100644
+index 23dd5fffc..e4a3f4366 100644
 --- a/RELEASE_NOTES.md
 +++ b/RELEASE_NOTES.md
-@@ -37,6 +37,7 @@ been tested on Linux. As of this release, the latest known version to work with
- ### New user-visible features
- 
- - (wifi) Add support for Power Save mode.
+@@ -44,6 +44,7 @@ been tested on Linux. As of this release, the latest known version to work with
+ - (spectrum) Added the Sionna RT channel model, including `SionnaRtChannelModel` and `SionnaRtSpectrumPropagationLossModel`, enabling ray-traced phased-array spectrum propagation via `sionna.rt` scenes and solver integration.
+ - (wifi) Added a round-robin MAC queue scheduler (`RrWifiQueueScheduler`).
+ - (wifi) Added support for Power Save mode.
 +- (internet) Added TcpRetransmitTag, a one-byte packet tag stamped by TcpSocketBase on retransmitted segments and removed at the receiver.
  
  ### Bugs fixed
@@ -157,7 +112,7 @@ index 000000000..2d2b064ad
 +} // namespace ns3
 diff --git a/src/internet/model/tcp-retransmit-tag.h b/src/internet/model/tcp-retransmit-tag.h
 new file mode 100644
-index 000000000..9193a4583
+index 000000000..5208322b8
 --- /dev/null
 +++ b/src/internet/model/tcp-retransmit-tag.h
 @@ -0,0 +1,72 @@
@@ -234,7 +189,7 @@ index 000000000..9193a4583
 +
 +#endif // TCP_RETRANSMIT_TAG_H
 diff --git a/src/internet/model/tcp-socket-base.cc b/src/internet/model/tcp-socket-base.cc
-index 847b8b277..c589962d4 100644
+index caed537e4..043d5a5ee 100644
 --- a/src/internet/model/tcp-socket-base.cc
 +++ b/src/internet/model/tcp-socket-base.cc
 @@ -33,6 +33,7 @@
@@ -245,7 +200,7 @@ index 847b8b277..c589962d4 100644
  #include "tcp-rx-buffer.h"
  #include "tcp-tx-buffer.h"
  
-@@ -1382,6 +1383,10 @@ TcpSocketBase::DoForwardUp(Ptr<Packet> packet, const Address& fromAddress, const
+@@ -1383,6 +1384,10 @@ TcpSocketBase::DoForwardUp(Ptr<Packet> packet, const Address& fromAddress, const
      SocketPriorityTag priorityTag;
      packet->RemovePacketTag(priorityTag);
  
@@ -256,7 +211,7 @@ index 847b8b277..c589962d4 100644
      // Peel off TCP header
      TcpHeader tcpHeader;
      packet->RemoveHeader(tcpHeader);
-@@ -3346,6 +3351,13 @@ TcpSocketBase::SendDataPacket(SequenceNumber32 seq, uint32_t maxSize, bool withA
+@@ -3347,6 +3352,13 @@ TcpSocketBase::SendDataPacket(SequenceNumber32 seq, uint32_t maxSize, bool withA
          m_retxEvent = Simulator::Schedule(m_rto, &TcpSocketBase::ReTxTimeout, this);
      }
  
@@ -272,7 +227,7 @@ index 847b8b277..c589962d4 100644
      {
 diff --git a/src/internet/test/tcp-retransmit-tag-test.cc b/src/internet/test/tcp-retransmit-tag-test.cc
 new file mode 100644
-index 000000000..0eaac42d8
+index 000000000..8c3294056
 --- /dev/null
 +++ b/src/internet/test/tcp-retransmit-tag-test.cc
 @@ -0,0 +1,167 @@
@@ -443,6 +398,3 @@ index 000000000..0eaac42d8
 +
 +static TcpRetransmitTagTestSuite
 +    g_tcpRetransmitTagTestSuite; //!< Static variable for test initialization
--- 
-2.50.1 (Apple Git-155)
-

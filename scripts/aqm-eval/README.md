@@ -59,7 +59,7 @@ records (ADR-0048) and summarised in the accompanying publication.
 ## Cross-references
 
 - Runner source: `src/ns-3/examples/aqm-eval-runner.cc`
-- Pinned ns-3 commit: `cc48bf5c1` (ns-3.47-83) + two `internet/`
+- Pinned ns-3 commit: `d2add90b4` (ns-3.48) + two `internet/`
   patches under `patches/ns3/`. **No** mainline traffic-control
   AQM is patched.
 - Substrate-client framing: chapters 03, 06 (DiffServ), 10 (L4S),

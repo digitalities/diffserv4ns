@@ -18,7 +18,7 @@ The module is distributed through the ns-3 App Store. To install it
 into your own ns-3-dev tree:
 
 1. **Use the pinned ns-3-dev revision.** Built and tested against
-   commit `cc48bf5c15a4918364abc2b2b060b4056dce09a4` (`ns-3.47+83`).
+   commit `d2add90b452d600cfb4859baed8e9ea633519447` (`ns-3.48`).
    Newer revisions may need API adjustments.
 
 2. **Apply the local ns-3-dev patches.** The module depends on three
@@ -111,7 +111,7 @@ python3 test.py -s diffserv -v
 ```
 
 Expected: all tests pass on the pinned ns-3-dev revision
-(`cc48bf5c15a4918364abc2b2b060b4056dce09a4`, i.e. `ns-3.47+83`).
+(`d2add90b452d600cfb4859baed8e9ea633519447`, i.e. `ns-3.48`).
 
 App Store users who installed only this module follow the build flow
 in the *Installing via the ns-3 App Store* section above.

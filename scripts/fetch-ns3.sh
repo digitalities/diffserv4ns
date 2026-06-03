@@ -67,7 +67,7 @@ fi
 
 # Pinned ns-3-dev revision: the diffserv module is built and tested
 # against this specific commit. See CLAUDE.md ("Pinned version").
-NS3_PIN="cc48bf5c15a4918364abc2b2b060b4056dce09a4"
+NS3_PIN="d2add90b452d600cfb4859baed8e9ea633519447"   # = ns-3.48 release tag (2026-06-02)
 
 if [ "$SOURCE_ONLY" -eq 0 ]; then
     if [ -n "$WORKTREE_TOPIC" ]; then
