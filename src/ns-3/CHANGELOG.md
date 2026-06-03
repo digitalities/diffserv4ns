@@ -369,7 +369,7 @@ GPL header. See ADR-0036 for the full rationale.
 - **PR3d-core-symmetric**: `DiffServCoreQueueDisc` multi-slot widening. Core stays single-inner; no scenario motivates hierarchical core composition.
 - **Additional dispatch keys** (ECT(1), 5-tuple, app-type). DSCP-only suffices for gap 1.
 
-See `docs/adr/0035-per-dscp-inner-dispatch.md` and `docs/superpowers/plans/2026-04-19-pr3d-per-dscp-inner-dispatch.md` for full context.
+See the per-DSCP inner-dispatch decision record (ADR-0035) for full context.
 
 ---
 

@@ -62,7 +62,7 @@ Extensions over what the 2001 DiffServ4NS module provided:
 ```bash
 git clone https://github.com/digitalities/diffserv4ns.git
 cd diffserv4ns
-./scripts/fetch-ns3.sh                 # pinned ns-3.47 + local patches
+./scripts/fetch-ns3.sh                 # pinned ns-3.48 + local patches
 cd ns3/ns-3-dev
 ./ns3 configure --enable-tests --enable-examples
 ./ns3 build diffserv

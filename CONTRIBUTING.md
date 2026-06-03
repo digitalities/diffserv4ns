@@ -127,7 +127,7 @@ two so far: `patches/ns3/0001-tcp-persist-empty-buffer.patch` and
 First-time setup:
 
 ```bash
-./scripts/fetch-ns3.sh    # ns-3.47 pinned + patches/ns3/ auto-applied
+./scripts/fetch-ns3.sh    # ns-3.48 pinned + patches/ns3/ auto-applied
 ./scripts/fetch-ns2.sh    # ns-2.29 frozen + ns-2.35 modernised
 cd ns3/ns-3-dev
 ./ns3 configure --enable-tests --enable-examples

@@ -51,8 +51,8 @@ cd ns3/ns-3-dev
 ./ns3 build diffserv
 ```
 
-The pinned ns-3-dev revision is `cc48bf5c15a4918364abc2b2b060b4056dce09a4`
-(nearest release tag `ns-3.47-83-gcc48bf5c1`, 2026-04-10).
+The pinned ns-3-dev revision is `d2add90b452d600cfb4859baed8e9ea633519447`
+(the `ns-3.48` release tag, 2026-06-02).
 
 ---
 
