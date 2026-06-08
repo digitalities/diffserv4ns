@@ -4,6 +4,13 @@
 ![ns-2](https://img.shields.io/badge/ns--2-2.29%20%7C%202.35%20%C2%B7%20archival-lightgrey)
 ![ns-3](https://img.shields.io/badge/ns--3-substrate%20%C2%B7%20active-orange)
 
+> **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)**,
+> where the substrate (*Stratum*) now lives in its own repository and ships with the full handbook.
+> The `src/ns-3/` copy in *this* repository is the snapshot evaluated in the paper — tagged
+> [`v1.0-icns3-submission`](https://github.com/digitalities/diffserv4ns/releases/tag/v1.0-icns3-submission)
+> — and remains unchanged while the paper is under review. The ns-2 archive (`src/ns-2.29/`, `src/ns-2.35/`)
+> continues to live here.
+
 **A 25-year Differentiated Services lineage spanning two network simulators.** DiffServ4NS began as a DiffServ (RFC 2474/2475) module for **ns-2** — edge + core routers; policers (Token Bucket, srTCM, trTCM, TSW2CM, TSW3CM); droppers (WRED, RIO); schedulers (PQ, WFQ, SFQ, SCFQ, LLQ, WF2Q+) — and is carried forward into an **ns-3 QoS substrate** (*Stratum*) that composes DiffServ, L4S, and CAKE on a single edge queue disc.
 
 Originally designed in 2001 for the author's MSc thesis, peer-reviewed at IEEE [ISCC 2002](https://doi.org/10.1109/ISCC.2002.1021705), released on SourceForge in 2006, forward-ported to ns-2.35 in 2026, and re-imagined as the ns-3 substrate *Stratum*. Built using Evaluation-Driven Development — a layered Intent → Structural → Quality spec suite gates every change.
