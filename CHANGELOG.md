@@ -10,11 +10,13 @@ Built and tested against ns-3-dev commit `d2add90b4` (ns-3.48).
 
 ---
 
-## [Unreleased]
+## ns-3 development continues at stratum-ns3
 
-### Changed
-
-- Re-pinned the ns-3 base to the ns-3.48 stable release tag (`d2add90b4`); full regression + audit suite re-validated, no behavioral changes.
+Active development and releases of the ns-3 substrate now happen in its own
+repository, [stratum-ns3](https://github.com/digitalities/stratum-ns3). The
+ns-3 port recorded below (`v1.0-icns3-submission`) is the snapshot that
+accompanied the ICNS3 2026 paper; for ns-3 changes after that point, see the
+stratum-ns3 CHANGELOG.
 
 ---
 
