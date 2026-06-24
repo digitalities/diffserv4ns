@@ -1,12 +1,18 @@
 # DiffServ4NS for ns-3 — *Stratum*
 
+> **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)**,
+> where the substrate (*Stratum*) now lives in its own repository and ships with the full handbook.
+> The `src/ns-3/` copy in *this* repository is the frozen snapshot tagged
+> [`v1.0-icns3-submission`](https://github.com/digitalities/diffserv4ns/releases/tag/v1.0-icns3-submission);
+> active development continues in `stratum-ns3`.
+
 *Scope: this document covers the **ns-3 substrate** of the DiffServ4NS
 project — a QoS substrate composing DiffServ, L4S, and CAKE in
 [ns-3](https://www.nsnam.org/). For the ns-2 archive see
 [`README-ns-2.md`](README-ns-2.md); for the project overview see the
 release [`README.md`](README.md).*
 
-This is the active variant of the DiffServ4NS lineage. Where the ns-2
+The ns-3 substrate is the living branch of the DiffServ4NS lineage. Where the ns-2
 archive (`src/ns-2.29/` and `src/ns-2.35/`) preserves the 2001 module as
 a faithful historical reference, the ns-3 substrate is a new whole that
 absorbs the DiffServ algorithms as one of three composed peer
