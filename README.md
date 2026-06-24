@@ -2,7 +2,7 @@
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](LICENSE)
 ![ns-2](https://img.shields.io/badge/ns--2-2.29%20%7C%202.35%20%C2%B7%20archival-lightgrey)
-![ns-3](https://img.shields.io/badge/ns--3-substrate%20%C2%B7%20active-orange)
+[![ns-3](https://img.shields.io/badge/ns--3-%E2%86%92%20stratum--ns3-blue)](https://github.com/digitalities/stratum-ns3)
 
 > [!IMPORTANT]
 > **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)**,
