@@ -4,6 +4,7 @@
 ![ns-2](https://img.shields.io/badge/ns--2-2.29%20%7C%202.35%20%C2%B7%20archival-lightgrey)
 ![ns-3](https://img.shields.io/badge/ns--3-substrate%20%C2%B7%20active-orange)
 
+> [!IMPORTANT]
 > **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)**,
 > where the substrate (*Stratum*) now lives in its own repository and ships with the full handbook.
 > The `src/ns-3/` copy in *this* repository is the snapshot evaluated in the paper — tagged

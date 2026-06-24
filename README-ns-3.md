@@ -1,10 +1,8 @@
 # DiffServ4NS for ns-3 — *Stratum*
 
-> **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)**,
-> where the substrate (*Stratum*) now lives in its own repository and ships with the full handbook.
-> The `src/ns-3/` copy in *this* repository is the frozen snapshot tagged
-> [`v1.0-icns3-submission`](https://github.com/digitalities/diffserv4ns/releases/tag/v1.0-icns3-submission);
-> active development continues in `stratum-ns3`.
+> [!IMPORTANT]
+> **Active ns-3 development has moved to [`stratum-ns3`](https://github.com/digitalities/stratum-ns3)** — the substrate (*Stratum*) now lives in its own repository and ships with the full handbook.
+> The `src/ns-3/` copy in *this* repository is the frozen snapshot tagged [`v1.0-icns3-submission`](https://github.com/digitalities/diffserv4ns/releases/tag/v1.0-icns3-submission); active development continues in `stratum-ns3`.
 
 *Scope: this document covers the **ns-3 substrate** of the DiffServ4NS
 project — a QoS substrate composing DiffServ, L4S, and CAKE in
