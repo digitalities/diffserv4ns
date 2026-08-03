@@ -49,6 +49,15 @@ Nine latent 2001-era bugs are fixed in the port layer:
 | DiffServ4NS ns-2 archive (this repository) | [10.5281/zenodo.19665019](https://doi.org/10.5281/zenodo.19665019) | 2001 design on ns-2.29 (2006 SourceForge port) + 2026 ns-2.35 port |
 | 2002 ISCC preprint (AAM) | [10.5281/zenodo.19665017](https://doi.org/10.5281/zenodo.19665017) | Peer-reviewed distillation of the 2001 thesis |
 
+## Successor
+
+The lineage does not end with ns-2. In 2026 the module was reimplemented
+for ns-3 and grew into a QoS substrate — *Stratum* — that composes
+Differentiated Services, L4S, and CAKE as three clients of one module,
+with the 2001 DiffServ4NS design as its classical-DiffServ core. That work
+is developed at
+[digitalities/stratum-ns3](https://github.com/digitalities/stratum-ns3).
+
 ## References
 
 1. **Andreozzi, S.** (2001). *DiffServ simulations using the Network Simulator: requirements, issues and solutions.* MSc thesis, LUT / University of Pisa.

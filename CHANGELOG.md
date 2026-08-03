@@ -1,22 +1,42 @@
 # Changelog
 
-All notable user-visible changes to the DiffServ4NS module suite — the
-2001 ns-2 original (preserved verbatim under `src/ns-2.29/`), the 2026
-ns-2.35 port layer (`src/ns-2.35/`), and the 2026 ns-3 port
-(`src/ns-3/`, contrib module name `diffserv`).
+All notable user-visible changes to the DiffServ4NS ns-2 module suite —
+the 2001 original (preserved verbatim under `src/ns-2.29/`) and the 2026
+ns-2.35 port layer (`src/ns-2.35/`).
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-Built and tested against ns-3-dev commit `d2add90b4` (ns-3.48).
+
+---
+
+## [Unreleased]
+
+### Changed
+
+- Completed the split between the two repositories: this one holds the
+  ns-2 lineage, and the ns-3 substrate lives in
+  [stratum-ns3](https://github.com/digitalities/stratum-ns3). The last
+  state of the ns-3 tree in this repository is frozen at tag
+  `v1.0-icns3-submission`.
+- `README.md` absorbed the former `README-ns-2.md` to become a single
+  ns-2 README; `README-ns-3.md` removed.
+- `docs/REPRODUCIBILITY.md` now covers the ns-2.29 and ns-2.35 scenarios
+  only; the ns-3 reproduction map lives in stratum-ns3.
+
+### Removed
+
+- `src/ns-3/`, `specs/`, `patches/ns3/`, the Linux CAKE and L4S reference
+  excerpts under `provenance/`, and the ns-3 evaluation scripts — 341
+  files. All remain available at tag `v1.0-icns3-submission`.
 
 ---
 
 ## ns-3 development continues at stratum-ns3
 
-Active development and releases of the ns-3 substrate now happen in its own
-repository, [stratum-ns3](https://github.com/digitalities/stratum-ns3). The
-ns-3 port recorded below (`v1.0-icns3-submission`) is the snapshot that
-accompanied the ICNS3 2026 paper; for ns-3 changes after that point, see the
-stratum-ns3 CHANGELOG.
+Active development and releases of the ns-3 substrate happen in its own
+repository, [stratum-ns3](https://github.com/digitalities/stratum-ns3).
+The ns-3 entries recorded below describe content that no longer lives in
+this repository; `v1.0-icns3-submission` is the last state of that tree
+here. For ns-3 changes after that point, see the stratum-ns3 CHANGELOG.
 
 ---
 

@@ -162,7 +162,7 @@ The ns-2.29 `webtraf.tcl` modifications include SFD-specific controls (e.g. `FLO
 
 ### Implications for attribution
 
-The ns-3 port should preserve the name FW (for DiffServ4NS compatibility) but document the SFD provenance and Chen & Heidemann citation in the header comment. The algorithm is **not RFC-based** and maintains per-flow state, which deviates from RFC 2475's per-flow-stateless principle for DiffServ.
+Any reimplementation should preserve the name FW (for DiffServ4NS compatibility) but document the SFD provenance and Chen & Heidemann citation in the header comment. The algorithm is **not RFC-based** and maintains per-flow state, which deviates from RFC 2475's per-flow-stateless principle for DiffServ.
 
 ---
 
