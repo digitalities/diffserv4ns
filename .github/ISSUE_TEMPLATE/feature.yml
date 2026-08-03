@@ -1,39 +1,42 @@
 name: Feature request
-description: Suggest a new capability for Stratum
+description: Suggest an addition to the DiffServ4NS ns-2 archive
 title: "[feature] "
 labels: ["kind/feature", "status/triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Suggest a capability you'd like Stratum to support. Focus on the problem and scenario; we'll discuss approaches in the issue thread.
+        This is an archival repository: the 2001 design is preserved as written, and the ns-2.35 layer exists to make it build and run correctly on modern toolchains rather than to evolve the design.
+
+        That still leaves useful ground - scenarios, platform support, documentation, tooling. Describe the problem and we'll discuss scope in the thread.
+
+        For new capabilities in the ns-3 QoS substrate *Stratum*, please file at [stratum-ns3](https://github.com/digitalities/stratum-ns3/issues) instead.
   - type: dropdown
-    id: client
+    id: area
     attributes:
-      label: Which client does this affect?
+      label: Which area does this affect?
       multiple: true
       options:
-        - "Classical DiffServ"
-        - "L4S"
-        - "CAKE"
-        - "Wireless integration"
-        - "AQM-eval suite"
-        - "Registry / extension surface"
-        - "Cross-cutting (substrate-wide)"
+        - "Example scenarios"
+        - "Build / packaging (Docker, toolchain support)"
+        - "Patch scripts"
+        - "Trace analysis tooling"
+        - "Documentation"
+        - "Other"
     validations:
       required: true
   - type: textarea
     id: scenario
     attributes:
-      label: What scenario would you like supported?
-      description: "Describe the use case. E.g., 'evaluate L4S under heavy CAKE-shaped background', 'integrate with ns-3 LTE module'."
+      label: What would you like supported?
+      description: "Describe the use case. E.g., 'build on Fedora without Docker', 'a scenario exercising WF2Q+ under bursty UDP'."
     validations:
       required: true
   - type: textarea
     id: gap
     attributes:
       label: Why doesn't the current shape fit?
-      description: "What does the substrate currently lack? Are there workarounds we should be aware of?"
+      description: "What is missing today? Are there workarounds we should be aware of?"
     validations:
       required: true
   - type: textarea
