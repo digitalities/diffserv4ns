@@ -7,8 +7,6 @@
 
 > Looking for the ns-3 version? The QoS substrate **Stratum** — composing DiffServ, L4S, and CAKE —
 > lives at [`digitalities/stratum-ns3`](https://github.com/digitalities/stratum-ns3).
-> The ns-3 snapshot that used to live in this repository is frozen at tag
-> [`v1.0-icns3-submission`](https://github.com/digitalities/diffserv4ns/releases/tag/v1.0-icns3-submission).
 
 **A Differentiated Services module for ns-2, preserved as its author wrote it.** DiffServ4NS implements RFC 2474/2475 DiffServ for the ns-2 network simulator: edge and core routers; policers (Token Bucket, srTCM, trTCM, TSW2CM, TSW3CM); droppers (WRED, RIO); and schedulers (PQ, WFQ, SFQ, SCFQ, LLQ, WF2Q+, RR, WRR, WIRR).
 
