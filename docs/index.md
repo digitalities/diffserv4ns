@@ -1,10 +1,10 @@
-# DiffServ4NS
+# DiffServ4NS (ns-2)
 
-**A Differentiated Services and QoS substrate spanning two simulator generations — ns-2 (2001 original + 2026 port) and ns-3 (active substrate composing DiffServ, L4S, and CAKE).**
+**A Differentiated Services module for ns-2 — the 2001 original and the 2026 ns-2.35 port.**
 
 DiffServ4NS was written in 2001 as part of an MSc thesis at Lappeenranta University of Technology (Finland) and the University of Pisa (Italy). It extends the stock ns-2 DiffServ module (Nortel Networks, 2000) with five fair-queueing schedulers, multiple traffic meters, per-DSCP monitoring, and a composable edge/core router architecture.
 
-> **Two eras, one lineage.** The **ns-2** code (versions 2.29 and 2.35) is preserved for historical reference — the ns-2.29 C++ source has not changed since 2001, and the ns-2.35 port is additive. Active development has moved to an **ns-3** substrate (*Stratum*) that composes Differentiated Services, L4S, and CAKE as three first-class clients of one QoS module. See the [ns-3 README](../README-ns-3.md) and [`src/ns-3/`](../src/ns-3/).
+> **Archived, not abandoned.** Both ns-2 variants are preserved for historical reference: the ns-2.29 C++ source has not changed since 2001, and the ns-2.35 port is additive. The successor for current work is the ns-3 QoS substrate *Stratum*, which composes Differentiated Services, L4S, and CAKE as three first-class clients of one module. It lives at [digitalities/stratum-ns3](https://github.com/digitalities/stratum-ns3).
 
 ## Features
 
@@ -24,12 +24,13 @@ The 2001 MSc thesis is the authoritative design document for this module. It is 
 
 ## Quick links
 
-- [ns-3 substrate (active development)](../README-ns-3.md) — *Stratum*: DiffServ + L4S + CAKE in ns-3
-- [ns-2 installation guide](installation.md) (ns-2.29 + ns-2.35, Docker)
+- [Installation guide](installation.md) (ns-2.29 + ns-2.35, Docker)
 - [Module architecture](architecture.md)
+- [Reproduction map](REPRODUCIBILITY.md) — per-scenario instructions
 - Thesis Chapter 3.3.3 (in the Zenodo thesis record above) — the module design specification
-- [25-year lineage](../LINEAGE.md)
+- [Provenance chain](../LINEAGE.md)
 - [Source code on GitHub](https://github.com/digitalities/diffserv4ns)
+- [Stratum for ns-3](https://github.com/digitalities/stratum-ns3) — the successor substrate
 
 ## Citation
 

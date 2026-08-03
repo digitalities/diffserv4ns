@@ -4,6 +4,12 @@ This file documents bugs surfaced while porting DiffServ4NS from ns-2.29
 to ns-3. Entries are catalogued under an **area-prefix scheme** that
 shows where in the stack each defect lives:
 
+> **Scope note.** This repository holds the ns-2 lineage. The catalogue is
+> kept whole because the ns-2 defects were found *by* the cross-simulator
+> comparison — removing the ns-3 side of each entry would leave the ns-2
+> findings unexplained. Paths under `src/ns-3/` referenced below now live
+> in [digitalities/stratum-ns3](https://github.com/digitalities/stratum-ns3).
+
 - **N2-N** — ns-2 core defects (the ns-2 runtime / Tcl interpreter / WebTraf)
 - **D2-N** — DiffServ4NS-for-ns-2 defects (the headline bucket)
 - **N3-N** — ns-3 core defects
@@ -18,10 +24,9 @@ are unchanged; the mapping table below provides the bridge.
 This record serves two purposes:
 1. **Methodology:** demonstrates that the port is a *reasoned* translation,
    not a blind line-by-line copy.
-2. **ICNS3 2026 paper / tech report:** provides concrete examples of how
-   high-fidelity reconstruction surfaces latent bugs in *both* the legacy
-   code being ported and the modern simulator framework it is being
-   ported to.
+2. **Evidence:** provides concrete examples of how high-fidelity
+   reconstruction surfaces latent bugs in *both* the legacy code being
+   ported and the modern simulator framework it is being ported to.
 
 ---
 
