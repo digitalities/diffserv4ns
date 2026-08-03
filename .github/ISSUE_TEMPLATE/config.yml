@@ -3,12 +3,12 @@ contact_links:
   - name: CONTRIBUTING.md
     url: https://github.com/digitalities/diffserv4ns/blob/main/CONTRIBUTING.md
     about: "Read this first for the contribution scope and what's worth contributing."
+  - name: Stratum (the ns-3 substrate)
+    url: https://github.com/digitalities/stratum-ns3/issues
+    about: "This repository is the ns-2 archive. For the ns-3 QoS substrate, open an issue in stratum-ns3."
   - name: Security disclosure
     url: mailto:digitalities@gmail.com
     about: "Email digitalities@gmail.com for defects with potential security impact rather than opening a public issue."
-  - name: ns-3 mailing list
-    url: https://groups.google.com/g/ns-3-users
-    about: "General ns-3 questions not specific to Stratum"
-  - name: ICNS3 / WNS3 community
-    url: https://www.nsnam.org/
-    about: "ns-3 ecosystem, conferences, and contribution channels"
+  - name: ns-2 documentation
+    url: https://www.isi.edu/nsnam/ns/
+    about: "General ns-2 questions not specific to DiffServ4NS"

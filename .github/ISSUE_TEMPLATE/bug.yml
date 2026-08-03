@@ -1,5 +1,5 @@
 name: Bug report
-description: Report unexpected behaviour in Stratum
+description: Report unexpected behaviour in the DiffServ4NS ns-2 module
 title: "[bug] "
 labels: ["kind/bug", "status/triage"]
 body:
@@ -8,7 +8,7 @@ body:
       value: |
         Thanks for filing a bug report! Please fill in the fields below so we can reproduce and triage quickly.
 
-        For ns-3 mainline defects surfaced by Stratum (e.g. crashes in core ns-3 classes), select "ns-3 mainline" in the **Where** field — we file these upstream via `patches/ns3/`.
+        This repository holds the ns-2 lineage. For the ns-3 QoS substrate *Stratum*, please file at [stratum-ns3](https://github.com/digitalities/stratum-ns3/issues) instead.
 
         For security-impacting defects, please email `digitalities@gmail.com` rather than opening a public issue.
   - type: dropdown
@@ -16,40 +16,49 @@ body:
     attributes:
       label: Where is the defect?
       options:
-        - "Stratum substrate (src/ns-3/) — DiffServ / L4S / CAKE client"
-        - "ns-2 archive (src/ns-2.29/ or src/ns-2.35/)"
-        - "Scripts (scripts/)"
-        - "Documentation (handbook, guide, ADRs, specs)"
-        - "ns-3 mainline (surfaced by this work)"
+        - "ns-2.35 port layer (src/ns-2.35/)"
+        - "ns-2.29 original (src/ns-2.29/) - note: frozen, fixes land in the 2.35 layer"
+        - "Example scenarios (examples/)"
+        - "Build or patch scripts (scripts/)"
+        - "Documentation (docs/, README)"
+        - "ns-2 core (surfaced by this work)"
         - "Other (describe in the body)"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Which ns-2 version?
+      options:
+        - "ns-2.35"
+        - "ns-2.29"
+        - "Both"
     validations:
       required: true
   - type: input
     id: example
     attributes:
       label: Example or scenario used
-      description: "Which example .cc file or scenario shows the problem?"
-      placeholder: "e.g., diffserv-example-1.cc, or 'cake-rrul with --rate=10Mbps'"
+      description: "Which scenario shows the problem?"
+      placeholder: "e.g., example-2-fullscale, or 'example-1 under WF2Qp'"
     validations:
       required: true
-  - type: input
-    id: spec
+  - type: dropdown
+    id: buildpath
     attributes:
-      label: Related spec (optional)
-      description: "If the defect violates a spec assertion, name it (e.g. S-2.1, Q-1.3, I-2.6)."
-  - type: input
-    id: ns3-commit
-    attributes:
-      label: ns-3 commit hash
-      description: "Output of `cd ns3/ns-3-dev && git rev-parse HEAD` (or the pinned commit from CLAUDE.md if you used fetch-ns3.sh as-is)"
+      label: How did you build?
+      options:
+        - "Docker (scripts/build-ns2-allinone-*-docker.sh)"
+        - "Direct host build (legacy path)"
+        - "Other (describe in the body)"
     validations:
       required: true
   - type: textarea
     id: environment
     attributes:
       label: Build environment
-      description: "OS + compiler version + Python version"
-      placeholder: "macOS 14.5, clang 15, Python 3.11"
+      description: "OS + compiler version + Docker version if applicable"
+      placeholder: "macOS 14.5 (Apple Silicon), Docker 27.0, image ubuntu:18.04 + GCC 7"
     validations:
       required: true
   - type: textarea
@@ -75,5 +84,5 @@ body:
     id: logs
     attributes:
       label: Logs or output
-      description: "Paste relevant `./ns3 run` output, test failures, or build errors."
+      description: "Paste relevant simulator output, trace excerpts, or build errors."
       render: shell
