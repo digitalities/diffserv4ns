@@ -1,4 +1,4 @@
-# Lineage — diffserv-ns3
+# Lineage — DiffServ4NS
 
 A twenty-five-year provenance chain from a master's thesis at the University of Pisa (with work performed at Lappeenranta University of Technology), through a personal-website release, a 2006 port from ns-2.1b8a to ns-2.29 re-packaged on SourceForge, twenty years of dormancy, and a return to active development as a port to ns-3 — built on real-network measurements that themselves predate the thesis.
 
@@ -12,7 +12,7 @@ Andreozzi 2001 thesis: ns-2.1b8a reproduction + extension ("DiffServ+")
         ↓ 2006 port from ns-2.1b8a to ns-2.29 + rename + SourceForge release
 DiffServ4NS-0.2 on SourceForge, 2006
         ↓ 20-year dormancy
-diffserv-ns3 port, April 2026
+ns-3 port, April 2026
 ```
 
 Each link is independently checkable. Each link traces back to a real-world ground truth that pre-dates the simulation entirely. **The core algorithmic code of the 2001 DiffServ+ module is preserved through every downstream step: the 2006 SourceForge release re-skinned it for the ns-2.29 API without changing the algorithms.**
@@ -20,7 +20,7 @@ Each link is independently checkable. Each link traces back to a real-world grou
 ## Timeline
 
 ### May 2000 — Ferrari measurement campaign
-Tiziana Ferrari (then at INFN-CNAF) publishes "Differentiated Services: Experiment Report, Phase 2" — a real-network measurement campaign on a deployed DiffServ infrastructure. This is reference [48] in the Andreozzi 2001 thesis and the source of the figures in Appendix A. **It is the founding ground truth for the entire diffserv-ns3 lineage.**
+Tiziana Ferrari (then at INFN-CNAF) publishes "Differentiated Services: Experiment Report, Phase 2" — a real-network measurement campaign on a deployed DiffServ infrastructure. This is reference [48] in the Andreozzi 2001 thesis and the source of the figures in Appendix A. **It is the founding ground truth for the entire DiffServ4NS lineage.**
 
 ### 2000–2001 — MSc thesis preparation, Pisa and Lappeenranta
 Sergio Andreozzi prepares his MSc thesis at the **University of Pisa** (the degree-granting institution), with the work performed at **Lappeenranta University of Technology (LUT), Finland**, under co-supervision. Four supervisors:
@@ -92,13 +92,15 @@ Twenty years of dormancy total, counting from the 2001 implementation. Twenty fr
 ### April 2026 — ns-3 port begins
 Twenty-five years after the 2001 implementation, Sergio returns to the module to port it to ns-3 mainline. The port uses **Evaluation-Driven Development (EDD)** — a spec-driven methodology Sergio developed for autonomous LLM coding agents in 2025–2026, applying tiered specification suites (Intent, Structural, Quality) as formalised constraints.
 
+> The ns-3 work grew into a QoS substrate of its own, *Stratum*, and moved to a separate repository: [digitalities/stratum-ns3](https://github.com/digitalities/stratum-ns3). This document records the chain up to that point; the ns-3 chapter continues there.
+
 Three independent oracles validate the port:
 
 1. **The 2001 thesis Chapter 3.3.3 design** + **the dsCore.h author header in the SourceForge release** → Intent specs
 2. **RFC 2697 / 2698 / 2859 conformance vectors** → Structural specs
 3. **Ferrari 2000 real-network measurements**, reproduced in **Appendix A of the 2001 thesis** as Figures A.1, A.3, A.5, A.7 → Quality specs (gold standard)
 
-The port aims to bring to ns-3 mainline several capabilities that do not currently exist there: WFQ, WF2Q+, SCFQ, SFQ as schedulers; the TSW meters; per-DSCP frequency-distribution monitoring; and a composable DiffServ edge/core router.
+The port set out to bring to ns-3 mainline several capabilities that did not exist there: WFQ, WF2Q+, SCFQ, SFQ as schedulers; the TSW meters; per-DSCP frequency-distribution monitoring; and a composable DiffServ edge/core router.
 
 ### 16 April 2026 — Full-scale thesis Scenario 2 reconstruction
 A Tcl script not shipped with the 2006 SourceForge release nor tracked in its SVN repository is reconstructed from the 2001 thesis Chapter 4 prose, Table 4.3 / 4.5, and Figure 4.3:
@@ -155,14 +157,6 @@ Both are gap-finding methodologies built on careful comparison against an extern
 
 So this port is not just an exercise in moving 4,000 lines of C++ from one simulator to another. It is a full-circle return: the same person, the same problem domain, the same methodological commitment, applying twenty-five years of accumulated craft to a module he wrote as an MSc student — and which, even then, was already grounded in real measurements made by a colleague who would later become a long-term collaborator.
 
-## For the WNS3 paper
-
-If a publication comes out of the port, the lineage gives it a distinctive framing:
-
-> *In 2000, Tiziana Ferrari published a measurement campaign on a real DiffServ deployment. In 2001, Sergio Andreozzi's MSc thesis at the University of Pisa (work performed at Lappeenranta University of Technology, Finland) used those measurements as ground truth to identify gaps in the ns-2 DiffServ module, designed and implemented an extended module ("DiffServ+") against ns-2.1b8a whose UML class diagram defined every class that would later ship publicly, and demonstrated that the extended simulator could reproduce the real measurements within tight tolerances. The work was published at ISCC 2002, and the source code was immediately made available on the author's personal website. In 2006, the module was ported from ns-2.1b8a to ns-2.29 and released on SourceForge as DiffServ4NS-0.2 under GPLv2 — a re-skinning for the evolved ns-2 API at the moment when "research code on a public forge with a project name and a licence" had become the new norm. The algorithmic core never changed. The module was dormant for twenty years. This paper presents a port to ns-3, performed by the original author twenty-five years after the original implementation, using Evaluation-Driven Development with an LLM coding agent. The port closes specific gaps in ns-3 mainline (WFQ family, TSW meters, per-DSCP monitoring), validates against the original Ferrari measurements via the thesis appendix figures, and serves as a case study of how a contemporaneous thesis can function as the founding specification for an LLM-assisted reimplementation a quarter-century later — across the entire history of how academic software has been distributed.*
-
-That last clause is the unusual angle: the project literally bridges three eras of academic software distribution (personal website → public forge → LLM-assisted port from a frozen reference), with a single author and a single ground truth running through all three.
-
 ## References
 
 1. **Ferrari, T.** (2000). *Differentiated Services: Experiment Report, Phase 2.* v 1.1, May 2000. The founding measurement source.
@@ -187,8 +181,3 @@ That last clause is the unusual angle: the project literally bridges three eras 
 17. **Golestani, S. J.** (1994). *A self-clocked fair queueing scheme for broadband applications.* Proc. IEEE INFOCOM '94. — SCFQ.
 18. **Goyal, P., Vin, H. M. & Cheng, H.** (1996). *Start-time Fair Queueing: A scheduling algorithm for integrated services packet switching networks.* Proc. SIGCOMM 1996. — SFQ.
 19. **Cisco Systems** (2001). *Low Latency Queueing.* Cisco IOS documentation. — LLQ.
-
-### iproute2 userspace snapshots
-
-- `provenance/linux-iproute2-87c66f79d8b0/q_cake.c` — frozen iproute2 userspace CAKE qdisc plugin at commit `87c66f79d8b09779c01c07122b0846f83b566dc1` (2026-05-07). Authoritative for flow-isolation mode names (`cake_flow_names[]`), `tc -s qdisc show cake` xstats output format, and `autorate-ingress` flag spelling. Cited by ADR-0093.
-- `provenance/iproute2-q-cake-62d47c2dbc0eaecdd20c0e19406067488025e92e/q_cake.c` — frozen iproute2 userspace CAKE qdisc plugin at commit `62d47c2dbc0eaecdd20c0e19406067488025e92e` (fetched 2026-05-23). Authoritative for `cake_link_layer_keywords[]` (link-layer overhead preset table, T1.2 LinkPreset) and `presets[]` (RTT preset table, T1.3 RttPreset). Cited by ADR-0117.
