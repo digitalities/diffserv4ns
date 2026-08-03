@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Parse ns-2 and ns-3 DiffServ trace files into a common CSV format.
+Parse DiffServ trace files into a common CSV format.
 
-Both simulators produce space-delimited trace files with identical column
-layouts (by design — the ns-3 example matches the ns-2 output format).
+Trace files are space-delimited with a fixed column layout.
 
 Input:  a directory containing ServiceRate.tr, EFQueueLen.tr, BEQueueLen.tr,
         OWD.tr, IPDV.tr (and optionally *_FD.tr frequency distributions).
@@ -12,7 +11,7 @@ Output: a single CSV to stdout (or --output file) with schema:
 
 Usage:
     python3 parse-traces.py --input-dir baseline/ns2/example-1/PQ-0512
-    python3 parse-traces.py --input-dir output/ns3/example-1/PQ-0512
+    python3 parse-traces.py --input-dir output/ns2-35/example-1/PQ-0512
 """
 
 import argparse

@@ -7,12 +7,12 @@
 # AF11 HTTP aggregate:
 #
 #   - bulk-TCP (this script): greedy bidirectional TCP, matches the
-#     ns-2.29 and ns-3 reconstructions used for paper §5.6.
+#     ns-2.29 reconstruction.
 #   - WebTraf  (peer script): PagePool/WebTraf session model, matches
 #     the thesis §4.2 traffic description.
 #
 # The two sweeps let Fig 8.2 be drawn as a 4-line figure (ns-2.29,
-# ns-2.35-bulkTCP, ns-2.35-WebTraf, ns-3) so the traffic-model impact
+# ns-2.35-bulkTCP, ns-2.35-WebTraf) so the traffic-model impact
 # is visible and attributable.
 #
 # Output: output/ns2-35/example-2-fullscale-bulktcp/set-{1..6}/{ServiceRate,QueueLen,PktLoss}.tr
