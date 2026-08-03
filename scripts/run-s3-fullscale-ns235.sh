@@ -10,7 +10,7 @@
 # scenario-3.tcl is the sole S3 reconstruction (771 nodes, 5000 s,
 # LLQ+SFQ 3:3:3:1); there is no separate "fullscale" Tcl variant.
 # The `-fullscale` suffix in the output tree is used only for naming
-# consistency with ns-3 (diffserv-example-3 --scale=full).
+# consistency with the ns-2.29 full-scale run.
 #
 # Usage:
 #   scripts/run-s3-fullscale-ns235.sh

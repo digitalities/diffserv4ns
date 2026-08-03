@@ -15,7 +15,6 @@
 # <version>:
 #   ns2-29   — ns-2.29 (patched + built, Ubuntu 18.04 Docker)
 #   ns2-35   — ns-2.35 (patched + built, Ubuntu 18.04 Docker)
-#   ns3      — ns-3 (built in ns3/ns-3-dev)
 #
 # Options:
 #   --sim-time <sec>     Override simulation time (passed to scenario if supported)
@@ -72,7 +71,7 @@ if [[ "$ALL_MODE" == true ]]; then
     echo ""
     printf "%-20s  %-10s  %-12s  %s\n" "version" "exit-code" "wall-clock" "output-dir"
     printf "%-20s  %-10s  %-12s  %s\n" "------" "---------" "----------" "----------"
-    for V in ns2-29 ns2-35 ns3; do
+    for V in ns2-29 ns2-35; do
         TSTART=$(date +%s)
         ARGS=("$SCENARIO" "$V")
         [[ -n "$SIM_TIME_OVERRIDE" ]] && ARGS+=(--sim-time "$SIM_TIME_OVERRIDE")
@@ -100,7 +99,7 @@ VERSION="${VERSION:-}"
 # Validate inputs
 # ---------------------------------------------------------------------------
 VALID_SCENARIOS="example-1 example-2 example-2-fullscale example-3 webtraf-ns235-test"
-VALID_VERSIONS="ns2-29 ns2-35 ns3"
+VALID_VERSIONS="ns2-29 ns2-35"
 
 if ! echo "$VALID_SCENARIOS" | grep -qw "$SCENARIO"; then
     echo "ERROR: Unknown scenario '$SCENARIO'. Valid: $VALID_SCENARIOS" >&2
@@ -148,7 +147,7 @@ fi
 OUTDIR="output/${VERSION}/${SCENARIO}${OUTDIR_SUFFIX}"
 
 # --print-outdir: print the computed OUTDIR and exit; no side effects
-# (no mkdir, no docker, no ns-3 build). Used by tests and by audit
+# (no mkdir, no docker, no build). Used by tests and by audit
 # pipelines that need to know the output path without running.
 if [[ "$PRINT_OUTDIR" == true ]]; then
     echo "$OUTDIR"
@@ -349,68 +348,6 @@ TCLEOF
     return $RC
 }
 
-run_ns3() {
-    # Map scenario to ns-3 example name
-    local NS3_EXAMPLE=""
-    local NS3_ARGS="--outputDir=$(pwd)/$OUTDIR"
-
-    case "$SCENARIO" in
-        example-1)
-            NS3_EXAMPLE="diffserv-example-1"
-            [[ -n "$SIM_TIME_OVERRIDE" ]] && NS3_ARGS="$NS3_ARGS --simTime=$SIM_TIME_OVERRIDE"
-            ;;
-        example-2)
-            NS3_EXAMPLE="diffserv-example-2"
-            [[ -n "$SIM_TIME_OVERRIDE" ]] && NS3_ARGS="$NS3_ARGS --simTime=$SIM_TIME_OVERRIDE"
-            ;;
-        example-2-fullscale)
-            NS3_EXAMPLE="diffserv-example-2"
-            NS3_ARGS="$NS3_ARGS --scale=full"
-            [[ -n "$SIM_TIME_OVERRIDE" ]] && NS3_ARGS="$NS3_ARGS --simTime=$SIM_TIME_OVERRIDE"
-            ;;
-        example-3)
-            NS3_EXAMPLE="diffserv-example-3"
-            [[ -n "$SIM_TIME_OVERRIDE" ]] && NS3_ARGS="$NS3_ARGS --simTime=$SIM_TIME_OVERRIDE"
-            ;;
-        example-3-fullscale)
-            NS3_EXAMPLE="diffserv-example-3"
-            NS3_ARGS="$NS3_ARGS --scale=full"
-            [[ -n "$SIM_TIME_OVERRIDE" ]] && NS3_ARGS="$NS3_ARGS --simTime=$SIM_TIME_OVERRIDE"
-            ;;
-        webtraf-ns235-test)
-            echo "ERROR: webtraf-ns235-test is an ns-2.35-only smoke test; no ns-3 equivalent." >&2
-            exit 1
-            ;;
-    esac
-
-    [[ -n "$EXTRA_FLAGS" ]] && NS3_ARGS="$NS3_ARGS $EXTRA_FLAGS"
-
-    if [[ ! -d "ns3/ns-3-dev" ]]; then
-        echo "ERROR: ns3/ns-3-dev not found. Run: ./scripts/fetch-ns3.sh" >&2
-        exit 1
-    fi
-
-    echo "  Running ns-3 example: $NS3_EXAMPLE"
-    echo "  Args: $NS3_ARGS"
-    echo ""
-
-    local RC=0
-    (cd ns3/ns-3-dev && ./ns3 run "$NS3_EXAMPLE $NS3_ARGS" 2>&1) \
-        | tee "$OUTDIR/ns3-stdout.log" || RC=${PIPESTATUS[0]:-$?}
-
-    local STDOUT_LINES
-    STDOUT_LINES=$(wc -l < "$OUTDIR/ns3-stdout.log" 2>/dev/null || echo 0)
-
-    echo ""
-    if [[ $RC -eq 0 ]]; then
-        echo "PASS: scenario=$SCENARIO version=$VERSION (stdout $STDOUT_LINES lines)"
-    else
-        echo "FAIL: scenario=$SCENARIO version=$VERSION (exit code $RC)"
-    fi
-
-    return $RC
-}
-
 # ---------------------------------------------------------------------------
 # Dispatch
 # ---------------------------------------------------------------------------
@@ -420,8 +357,5 @@ case "$VERSION" in
         ;;
     ns2-35)
         run_ns2 "ns2/ns-allinone-2.35" "ns-2.35/ns" "otcl-1.14" "tcl8.5.10" "tcl8.5.10"
-        ;;
-    ns3)
-        run_ns3
         ;;
 esac

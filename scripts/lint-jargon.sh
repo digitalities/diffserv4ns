@@ -16,26 +16,20 @@
 #   1 — one or more tokens found; offending file:line listed
 #
 # Scope (SCAN_PATHS_CODE — .cc/.h/.py/.sh only):
-#   src/ns-3/, src/ns-2.35/, scripts/, handbook/
-# Scope (SCAN_PATHS_MD — .md only):
-#   specs/, handbook/
+#   src/ns-2.35/, scripts/
+# Scope (SCAN_FILES_MD — named .md files):
+#   README.md
+# Scope (SCAN_PATHS_PROVENANCE — .md, with the decision-record carve-out):
+#   provenance/
 # Scope (SCAN_PATHS_CONFIG — .yml/.yaml/.md):
 #   .github/  (issue + PR templates, label definitions)
 #
-# Note: the `postponed-dir-ref` pattern flags Markdown cross-references to
-# `handbook/` and `guide/`, which are deferred from the v1.0 release. Remove
-# `guide/` (and, when the handbook ships, `handbook/`) from that pattern once
-# those trees are published.
 # Out of scope:
 #   src/ns-2.29/                  (frozen 2001 original; read-only)
+#   docs/                         (historical catalogues that legitimately
+#                                  name their own bug and patch identifiers)
+#   examples/                     (filenames such as smoke-bug9-phaseA.tcl)
 #   docs/adr/                     (decision records, private to the project)
-#   docs/superpowers/, paper/     (dev-only; do not ship in release)
-#   src/ns-3/CHANGELOG.md         (project-history artefact whose value
-#                                  depends on referencing phasing)
-#   scripts/lint-ns3-idioms.sh    (author-tooling: encodes rules sourced
-#                                  from author-private memory; the
-#                                  references to that source layer are
-#                                  intentional self-documentation)
 #
 # Allowlisted token patterns (matched-and-skipped before reporting):
 #   I-N, S-N.M, Q-N.M             — public spec identifiers indexed in
@@ -44,9 +38,6 @@
 #   F-A..F-D                      — public empirical-findings catalogue
 #   N2-N, D2-N, N3-N              — public bug-area-prefix identifiers
 #                                   indexed in docs/HISTORICAL_BUGS.md
-#                                   (note: D3-N is NOT allowlisted — that
-#                                   bucket is the private DS4-for-ns-3
-#                                   evolutionary log)
 #   DS4-PN                        — public NS2_PATCHES patch tokens
 
 set -euo pipefail
@@ -54,20 +45,20 @@ set -euo pipefail
 readonly REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-# handbook/ is deferred from the v1.0 release (not mirrored to the public
-# repo), so it is no longer release-bound and is out of lint scope. Re-add it
-# to both arrays — and drop guide/ from the postponed-dir-ref pattern — when
-# the handbook and guide trees are published.
+# This repository holds the ns-2 lineage only. The ns-3 scan paths
+# (src/ns-3, patches/ns3) and the ns-3 spec suite were removed along with
+# the substrate; they are linted in the stratum-ns3 repository instead.
 readonly SCAN_PATHS_CODE=(
-  "src/ns-3"
   "src/ns-2.35"
   "scripts"
-  "patches/ns3"
 )
 
-readonly SCAN_PATHS_MD=(
-  "specs"
-)
+# Empty since the ns-3 spec suite left with the substrate. README.md is
+# still scanned via SCAN_FILES_MD and provenance/ via SCAN_PATHS_PROVENANCE.
+# docs/ and examples/ are deliberately out of scope: both carry historical
+# catalogue identifiers (a bug catalogue naming its own bugs, filenames such
+# as smoke-bug9-phaseA.tcl) that the jargon rule is not meant to police.
+readonly SCAN_PATHS_MD=()
 
 # provenance/ ships wholesale in the public release (frozen reference excerpts
 # plus the LINEAGE docs), so it is release-bound and must be jargon-clean. It is
@@ -86,7 +77,6 @@ readonly SCAN_PATHS_PROVENANCE=(
 # reference to the dev style guide that are a separate policy question.
 readonly SCAN_FILES_MD=(
   "README.md"
-  "README-ns-3.md"
 )
 
 readonly FILE_GLOBS_CODE=(
@@ -200,7 +190,7 @@ for path in "${SCAN_PATHS_CODE[@]}"; do
   done
 done
 
-for path in "${SCAN_PATHS_MD[@]}"; do
+for path in ${SCAN_PATHS_MD[@]+"${SCAN_PATHS_MD[@]}"}; do
   if [ ! -d "$path" ]; then
     continue
   fi

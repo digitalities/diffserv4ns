@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # run-ns235-scenario2-srtcm-sweep.sh
 # 6-set WRED sweep for scenario-2-ns235-srtcm.tcl, the per-flow
-# srTCM classifier mirror of ns-3
+# srTCM classifier sweep
 # diffserv-example-2 --scale=full --classifier=srtcm.
 #
 # Each set's stdout lands in
