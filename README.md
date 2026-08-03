@@ -21,7 +21,7 @@ This repository ships two source variants side by side:
 | Variant | Status | Path | What it is |
 |---|---|---|---|
 | **ns-2.29** | frozen | `src/ns-2.29/` | The module as distributed in the 2006 SourceForge release DiffServ4NS-0.2. The algorithms were designed in 2001 against ns-2.1b8a alongside the author's MSc thesis; the 2006 release re-skinned the C++ source for the ns-2.29 API without changing the algorithms. Preserved read-only. |
-| **ns-2.35** | frozen | `src/ns-2.35/` | A 2026 port layer for ns-2.35 (the last stable ns-2 release, 2011) that fixes nine 2001-era bugs (BUG-1..5, BUG-7..10) and corrects the UDP header size, without altering the design. |
+| **ns-2.35** | frozen | `src/ns-2.35/` | A 2026 port layer for ns-2.35 (the last stable ns-2 release, 2011) that fixes nine 2001-era bugs and corrects the UDP header size, without altering the design. |
 
 The port layer is additive: a stock ns-2.35 tree plus the files under `src/ns-2.35/` produces the built module.
 
@@ -83,7 +83,7 @@ src/
     diffserv/                Core module: dsCore, dsred, dsPolicy, dsEdge, dsscheduler
     common/  tcp/  apps/     Modified ns-2 base files (agent, packet, TCP, UDP, telnet)
     tools/ webcache/ realaudio/ tcl/lib/
-  ns-2.35/                   2026 port layer (additive; BUG-1..5 + BUG-7..10 fixes, UDP header correction)
+  ns-2.35/                   2026 port layer (additive; nine bug fixes, UDP header correction)
     CHANGELOG.md             Port-layer changes relative to ns-2.29 original
     diffserv/  common/ tcp/ apps/ tools/ webcache/ realaudio/ tcl/
 examples/
